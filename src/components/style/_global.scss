@@ -1,0 +1,94 @@
+:root{
+  font-size: 62.5%;
+  --text-default: 1.5rem;
+  --text-title1: 3.6rem;
+  --text-title2: 2.4rem;
+  --text-title3: 1.8rem;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  font-size: 1.6rem;
+}
+
+.container{
+  max-width:1200px;
+  margin: 0 auto;
+}
+
+h1{
+font-size: var(--text-title1);
+}
+h2{
+font-size: var(--text-title2);
+}
+h3{
+font-size: var(--text-title13);
+}
+
+ul{
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+}
+
+// flex
+
+.flex{
+  display:flex;
+}
+
+.jc-evenly {
+  justify-content: space-evenly;
+}
+
+.jc-space-around {
+  justify-content: space-around;
+}
+
+.jc-space-between {
+  justify-content: space-between;
+}
+
+.jc-center {
+  justify-content: center
+}
+
+.jc-end {
+  justify-content: end;
+}
+
+.ai-center {
+  align-items: center
+}
+
+.direction-column {
+  flex-direction: column;
+}
+.direction-reverse {
+  flex-direction: column-reverse;
+}
+
+// main input
+
+input{
+  padding:1rem;
+  margin: 0 .4rem;
+
+}
+
+
