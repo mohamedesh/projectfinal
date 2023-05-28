@@ -1,21 +1,30 @@
-import Header from "../Element/Header"
+import Header from "../header/Header";
 import Login from "../login/Login";
-import {Routes,Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import DashboardUser from "../DashBoard/DashboardUser";
+import About from "../about/About";
+import SignIn from "../sign-in/SignIn";
+import Accueil from "../accueil/Accueil";
+import Categorie from "../Categorie/Categorie";
 
-const App = () =>{
-    return (
-        <div className={`container`}>
-            <Header/>
+const App = () => {
+  return (
+    <div>
+      <Header />
 
-            <Routes>
-                <Route path="/" element={<Login/>}/>
-                <Route path="/dashboard" element={<DashboardUser/>}/>
-            {/*    categorie*/}
-            </Routes>
+      <Routes>
+        <Route path="/" element={<Accueil />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/dashboard" element={<DashboardUser />} />
+        <Route path="/categorie" element={<Categorie />} />
 
-        </div>
-    )
-}
+        {/*    categorie*/}
+        {/*    ajoute categorie pr que au click sur une des categorie redirection vers la categorie est tous les element contenu */}
+      </Routes>
+    </div>
+  );
+};
 
-export default App
+export default App;

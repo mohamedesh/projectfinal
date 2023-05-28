@@ -1,0 +1,198 @@
+header{
+  width: 100%;
+  margin: 1.5rem 1rem;
+  padding:1rem;
+
+  & .logo{
+    width: 20%;
+    font-family: calligrapher-font;
+    font-size:5rem;
+    color: #0C6291;
+    & span {
+      margin-left: 3rem;
+    }
+  }
+
+  & .connect{
+    display:none;
+  }
+
+  //& .nav{
+  //  font-family: Laviossa-font;
+  //  width:40%;
+  //  & ul{
+  //    margin:1rem 0rem ;
+  //   & li{
+  //     padding:0;
+  //     & a {
+  //       text-decoration: none;
+  //
+  //     }
+  //   }
+  //  }
+  //}
+   & nav {
+
+     // pb : lorsque je clique sur un lien le menu reste est ne s'enleve pas
+
+    & .navlist {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: cadetblue;
+     transform: translateX(200%);
+     transition: transform .3s;
+      z-index: 1;
+      & li {
+        margin: 1rem 0;
+        padding-left: 0;
+        & a{
+          padding: 1.5rem 2rem;
+          display: inline-block;
+          /*permet de mettre du padding en haut et en bas*/
+          font-size: 2rem;
+          color: #ffffff;
+          transition: all .3s;
+        }
+        & a:hover{
+          background-color: #fff;
+          color: #49111c;
+          transform: translateY(-1rem);
+        }
+      }
+    }
+
+     & .burger{
+       display: block;
+       cursor: pointer;
+       width: 3rem;
+       height: 3rem;
+       margin-right: 2rem;
+       color: black;
+       & .bar {
+         display: inline-block;
+         width: 3rem;
+         height: .2rem;
+         background-color: #333;
+         position: relative;
+         z-index: 999;
+         &::before, &::after{
+           content: "";
+           width: 100%;
+           height: 100%;
+           background-color: #333;
+           position: absolute;
+           transition: all .3s;
+         }
+         &::before {
+           transform: translateY(-1rem);
+         }
+
+         &::after {
+           transform: translateY(1rem);
+         }
+       }
+     }
+
+      /*the most important for menu burger* : permet de ramener le menu qui etait en translate en annualnt tout les effets sur lui*/
+
+     & #burgertoggle:checked~.navlist {
+       transform: none;
+     }
+
+
+     /*rend la bar transparente pour pouvoir faire la croix */
+
+     & #burgertoggle:checked~.burger .bar {
+       background-color: transparent;
+     }
+
+     /*faire la croix dés le clique sur le menu*/
+
+     & #burgertoggle:checked~.burger .bar::before {
+       transform: rotate(-45deg);
+     }
+
+     & #burgertoggle:checked~.burger .bar::after {
+       transform: rotate(45deg);
+     }
+
+     & #burgertoggle {
+       display: none;
+     }
+
+   }
+
+
+
+
+}
+
+@media screen and (min-width:1024px) {
+  header {
+    & .logo {
+
+    }
+
+    & nav {
+      display: flex;
+      justify-content: space-around;
+      margin-left:8rem;
+      & .navlist {
+        transform: none;
+        transition: none;
+        position: static;
+        height: 0;
+        display: flex;
+        flex-direction: row;
+        & li a {
+          color: #0C6291;
+          &:hover {
+            background-color: #0C6291;
+            color: #ffffff;
+          }
+        }
+      }
+
+      & .burger {
+        display: none;
+        position: static;
+      }
+    }
+
+    & .connect {
+      width:20%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      & .logout{
+        all: unset;
+        cursor: pointer;
+        border: 1px solid #0C6291;
+        border-radius: 1rem;
+        padding:1rem 2rem;
+        &:hover{
+          background-color: #0C6291;
+          color: #ffffff;
+        }
+      }
+    }
+
+  }
+}
+
+@media screen and (min-width:768px){
+  header{
+    & .logo{
+
+    }
+    & nav {
+
+    }
+    & .connect{
+
+    }
+  }
+}

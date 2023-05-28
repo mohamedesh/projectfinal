@@ -12,3 +12,21 @@
 //    }
 //  }
 //}
+
+.ressource{
+  & .card{
+    border:1px solid #0C6291;
+    border-radius: 1.6rem;
+    text-align: center;
+    margin:2rem;
+    & p {
+      padding:1rem;
+    }
+  }
+}
+.form{
+  width:30%;
+  border-left:1px solid black;
+  margin:2rem;
+  padding:2rem;
+}

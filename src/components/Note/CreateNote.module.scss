@@ -1,0 +1,18 @@
+.note{
+  & .card{
+    background-color: #EAB171;
+    border-radius:2rem;
+    margin:2rem;
+    & button{
+      & img{
+        color: #EAB171;
+      }
+    }
+  }
+}
+.form{
+  width:30%;
+  border-left:1px solid black;
+  margin:2rem;
+  padding:2rem;
+}

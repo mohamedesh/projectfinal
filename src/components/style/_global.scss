@@ -4,6 +4,7 @@
   --text-title1: 3.6rem;
   --text-title2: 2.4rem;
   --text-title3: 1.8rem;
+  --blue-color:#0C6291;
 }
 
 *{
@@ -12,21 +13,29 @@
 
 body{
   font-size: 1.6rem;
+  font-family: Laviossa-font;
 }
 
 .container{
-  max-width:1200px;
+  max-width:1500px;
   margin: 0 auto;
 }
 
 h1{
+  font-size: 5rem;
+  text-align: center;
 font-size: var(--text-title1);
+  color: var(--blue-color)
+
 }
 h2{
 font-size: var(--text-title2);
+  color: var(--blue-color)
+
 }
 h3{
 font-size: var(--text-title13);
+  color: var(--blue-color)
 }
 
 ul{
@@ -83,6 +92,10 @@ img {
   flex-direction: column-reverse;
 }
 
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
 // main input
 
 input{
@@ -90,5 +103,54 @@ input{
   margin: 0 .4rem;
 
 }
+
+// font face
+
+@font-face {
+  font-family: "calligrapher-font";
+  src: url("../../font/Calligrapher-JRxaE.ttf");
+}
+
+@font-face {
+  font-family: "Laviossa-font";
+  src: url("../../font/Laviossa-Medium.otf");
+}
+
+// button
+
+.submit{
+  all: unset;
+  width: 50%;
+  margin: 2rem auto;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #0C6291;
+  border-radius: 1rem;
+  padding:1rem 2rem;
+
+  &:hover{
+    background-color: #0C6291;
+    color: #ffffff;
+  }
+}
+
+// article cards
+
+.container-cards{
+  width:400px;
+  margin:0 auto;
+}
+
+.buttonCard{
+  margin:.5rem .2rem;
+  padding:.5rem;
+  & button{
+    all:unset;
+    width:20px;
+
+  }
+}
+
+
 
 

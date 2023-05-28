@@ -28,7 +28,7 @@ const SignUp = () => {
                    <input type="text" value={pseudo} onChange={(e)=>handleChangeField("pseudo",e.target.value)} placeholder="pseudo" />
                    <input type="email" value={email} onChange={(e)=>handleChangeField("email",e.target.value)} placeholder="email" />
                    <input type="password" value={password} onChange={(e)=>handleChangeField("password",e.target.value)} placeholder="mot de passe" />
-                   <input type="submit" value="Envoyez" />
+                   <input className={mc.submit} type="submit" value="Envoyez" />
                </form>
     );
 };

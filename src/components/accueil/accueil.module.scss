@@ -1,0 +1,64 @@
+.homepage{
+
+  & h1{
+    text-align: center;
+    margin: 5rem;
+    padding:1rem;
+  }
+  & .text{
+    text-align: start;
+    padding: 3rem;
+    margin:3rem;
+    line-height: 2;
+    overflow: scroll;
+
+  }
+  & .login{
+    margin:2rem;
+    padding:1rem;
+  }
+}
+
+@media  screen and (min-width: 1024px) {
+  .homepage{
+
+    & h1{
+      text-align: center;
+      margin: 5rem;
+      padding:1rem;
+    }
+    & .home{
+      display: flex;
+      justify-content: space-around;
+      & .text{
+        width:100%;
+        text-align: start;
+        padding: 3rem;
+        margin:3rem;
+        font-size :2rem;
+        line-height: 2;
+        overflow: visible;
+
+      }
+      & .login{
+        width:40%;
+        margin:2rem;
+        padding:1rem;
+      }
+    }
+
+  }
+}
+
+@media screen and (min-width: 768px){
+ .homepage{
+   & .home{
+     & .text{
+
+     }
+     & .login{
+
+     }
+   }
+ }
+}
