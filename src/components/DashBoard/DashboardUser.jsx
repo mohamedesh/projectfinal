@@ -10,9 +10,8 @@ const DashboardUser = () => {
   console.log();
   return (
     <div>
-      <h2>Ressource</h2>
+      <h1>Page de Bord</h1>
       <RessourceUser />
-      <h2>Note</h2>
       <CreateNote />
     </div>
   );

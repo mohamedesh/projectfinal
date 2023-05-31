@@ -13,20 +13,34 @@
 //  }
 //}
 
-.ressource{
-  & .card{
-    border:1px solid #0C6291;
-    border-radius: 1.6rem;
-    text-align: center;
+.ressourceUser{
+  & .ressource {
+    & .card{
+
+    }
+  }
+  & .form{
+    border-left:1px solid black;
     margin:2rem;
-    & p {
-      padding:1rem;
+    padding:2rem;
+    & .categorie{
+      all: unset;
+      border-bottom: 1px solid #0C6291 ;
+      border-left: 1px solid #0C6291;
+      padding: 2rem;
+      margin:.5rem
     }
   }
 }
-.form{
-  width:30%;
-  border-left:1px solid black;
-  margin:2rem;
-  padding:2rem;
-}
+
+//.ressource{
+//  & .card{
+//    border:1px solid #0C6291;
+//    border-radius: 1.6rem;
+//    text-align: center;
+//    margin:2rem;
+//    & p {
+//      padding:1rem;
+//    }
+//  }
+//}

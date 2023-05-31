@@ -1,36 +1,96 @@
-import React, {useEffect, useState} from 'react';
-import mc from "./signUp.module.scss"
+import React, { useEffect, useState } from "react";
+import mc from "./signUp.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import {postUser} from "../../redux/reducers/user.slice";
-import {newState} from "../../redux/reducers/user.slice";
-import {useLocation,useNavigate} from "react-router-dom";
-
+import { postUser } from "../../redux/reducers/user.slice";
+import { newState } from "../../redux/reducers/user.slice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const {surname,name,pseudo,password,email} = useSelector((store)=> store.user);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [pseudo, setPseudo] = useState("");
 
-    const handleChangeField = (key, value)=>{
-        dispatch(newState({key,value}))
-    }
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
 
-    const handleForm = async (e)=>{
-        e.preventDefault()
-        dispatch(postUser({surname,name, pseudo, password,email}));
-    }
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
-    return (
-               <form className={`flex direction-column `} onSubmit={handleForm}>
-                   <input type="text" value={surname} onChange={(e)=>handleChangeField("surname",e.target.value)} placeholder="nom" />
-                   <input type="text" value={name} onChange={(e)=>handleChangeField("name",e.target.value)} placeholder="prenom" />
-                   <input type="text" value={pseudo} onChange={(e)=>handleChangeField("pseudo",e.target.value)} placeholder="pseudo" />
-                   <input type="email" value={email} onChange={(e)=>handleChangeField("email",e.target.value)} placeholder="email" />
-                   <input type="password" value={password} onChange={(e)=>handleChangeField("password",e.target.value)} placeholder="mot de passe" />
-                   <input className={mc.submit} type="submit" value="Envoyez" />
-               </form>
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleChangeSurname = (e) => {
+    setSurname(e.target.value);
+  };
+
+  const handleChangePseudo = (e) => {
+    setPseudo(e.target.value);
+  };
+
+  // const { surname, name, pseudo, password, email } = useSelector(
+  //   (store) => store.user
+  // );
+
+  // const handleChangeField = (key, value) => {
+  //   dispatch(newState({ key, value }));
+  // };
+  //
+  const handleForm = async (e) => {
+    e.preventDefault();
+    dispatch(
+      postUser({
+        surname: surname,
+        name: name,
+        pseudo: pseudo,
+        password: password,
+        email: email,
+      })
     );
+  };
+
+  return (
+    <form className={`flex direction-column `} onSubmit={handleForm}>
+      <input
+        type="text"
+        value={surname}
+        onChange={(e) => handleChangeSurname(e)}
+        placeholder="nom"
+      />
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => handleChangeName(e)}
+        placeholder="prenom"
+      />
+      <input
+        type="text"
+        value={pseudo}
+        onChange={(e) => handleChangePseudo(e)}
+        placeholder="pseudo"
+      />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => handleChangeEmail(e)}
+        placeholder="email"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => handleChangePassword(e)}
+        placeholder="mot de passe"
+      />
+      <input className={mc.submit} type="submit" value="Envoyez" />
+    </form>
+  );
 };
 
 export default SignUp;

@@ -7,14 +7,25 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { password, email } = useSelector((store) => store.user);
-  const handleChangeField = (key, value) => {
-    dispatch(newState({ key, value }));
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // const { password, email } = useSelector((store) => store.user);
+  // const handleChangeField = (key, value) => {
+  //   dispatch(newState({ key, value }));
+  // };
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
   };
 
   const handleChange = async (e) => {
     e.preventDefault();
-    dispatch(userSignIn({ password, email }));
+    dispatch(userSignIn({ password: password, email: email }));
   };
 
   return (
@@ -23,14 +34,14 @@ const SignIn = () => {
         type="email"
         value={email}
         required={true}
-        onChange={(e) => handleChangeField("email", e.target.value)}
+        onChange={(e) => handleChangeEmail(e)}
         placeholder="azerty@gmail.com"
       />
       <input
         type="password"
         value={password}
         required={true}
-        onChange={(e) => handleChangeField("password", e.target.value)}
+        onChange={(e) => handleChangePassword(e)}
         placeholder="mot de passe"
       />
       <input className={`submit`} type="submit" />

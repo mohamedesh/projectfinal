@@ -108,15 +108,9 @@ const body = {
 export const usersSlice = createSlice({
   name: "user",
   initialState: {
-    surname: "",
-    name: "",
-    pseudo: "",
-    password: "",
-    email: "",
     loading: false,
-    userGet: [],
-    userGetOne: [],
-    userOne: "",
+    users: {},
+    isLogged: null,
   },
   reducers: {
     // setter
@@ -129,33 +123,51 @@ export const usersSlice = createSlice({
     echapValues: (state, action) => {
       return { ...state, ...body };
     },
+    newSurname: (state, action) => {
+      console.log(action);
+      return { ...state, surname: action.payload };
+    },
+    userLogout: (state, action) => {
+      return { ...state, isLogged: false };
+    },
   },
 
   extraReducers: (builder) => {
     builder
       .addCase(postUser.fulfilled, (state, action) => {
-        return { ...state, loading: false, ...body };
+        return {
+          ...state,
+          loading: false,
+          users: action.payload.response,
+          isLogged: true,
+        };
       })
       .addCase(userSignIn.fulfilled, (state, action) => {
         // 3 eme parametre permet de
-        return { ...state, loading: false, email: "", password: "" };
+        console.log(action.payload.user);
+        return {
+          ...state,
+          loading: false,
+          // email: "",
+          // password: "",
+          users: action.payload.user,
+          isLogged: true,
+        };
+        //faire panding et rejected
       })
       // .addCase(getUser.fulfilled,(state,action)=>{
       //     console.log(action.payload)
       //     return {...state, loading:false, userGet: [...action.payload]}
       // })
       .addCase(deleteUser.fulfilled, (state, action) => {
-        return { ...state, loading: false, userGet: [action.payload] };
+        return { ...state, loading: false };
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        return { ...state, loading: false, email: "", password: "" };
-      })
-      .addCase(getUserOne.fulfilled, (state, action) => {
-        console.log(action.payload);
-        return { ...state, loading: false, userGetOne: [action.payload] };
+        return { ...state, loading: false };
       });
   },
 });
 
-export const { newState, test, echapValues } = usersSlice.actions;
+export const { newState, test, echapValues, newSurname, userLogout } =
+  usersSlice.actions;
 export default usersSlice.reducer;
