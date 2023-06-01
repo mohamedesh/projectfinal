@@ -18,6 +18,7 @@ const RessourceUser = () => {
   const [ressourceUpdate, setRessourceUpdate] = useState();
   const [visible, setVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [shareRessource, setShareRessource] = useState(false);
 
   const dispatch = useDispatch();
   const { title, url, description, ressourcesByUserId } = useSelector(
@@ -52,13 +53,15 @@ const RessourceUser = () => {
   console.log(handleRessource);
 
   const handleShare = (id) => {
+    setShareRessource(!shareRessource);
     dispatch(
       updateRessource({
-        shareRessource: true,
+        shareRessource,
         id: id,
       })
     );
   };
+  console.log(shareRessource);
 
   // supprimer ressources
   const deleteRessourceId = (id) => {
@@ -241,7 +244,7 @@ const RessourceUser = () => {
         ) : (
           categoriesRessource.map((categorie) => (
             <>
-              <h1>{categorie.name}</h1>
+              <h2>{categorie.name}</h2>
               <div className={`${mc.categorieRessource}`}>
                 {ressourcesByUserId.map((ressource) => {
                   if (categorie.id === ressource.categorieId) {
@@ -293,7 +296,6 @@ const RessourceUser = () => {
                   }
                 })}
               </div>
-              )
             </>
           ))
         )}

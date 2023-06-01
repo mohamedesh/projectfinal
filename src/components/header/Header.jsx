@@ -60,9 +60,6 @@ const Header = () => {
             <NavLink to={"/dashboard"}>Page de bord</NavLink>
           </li>
           <li>
-            <NavLink to={"/categorie"}>Catégories</NavLink>
-          </li>
-          <li>
             <NavLink to={"/discovery"}>Découvrir</NavLink>
           </li>
         </ul>

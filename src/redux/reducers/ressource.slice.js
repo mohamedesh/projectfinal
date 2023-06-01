@@ -90,12 +90,12 @@ export const updateRessource = createAsyncThunk(
   "ressource/update",
   async (ressource, thunkApi) => {
     const { fulfillWithValue, rejectWithValue } = thunkApi;
-    const { title, url, description, id, share } = ressource;
+    const { title, url, description, id, shareRessource } = ressource;
     console.log(id);
     const token = getItem("token");
     const { status, data, error } = await updateRequest(
       `ressource/update/${id}`,
-      { title, url, description, share },
+      { title, url, description, shareRessource },
       token
     );
     console.log(data);
