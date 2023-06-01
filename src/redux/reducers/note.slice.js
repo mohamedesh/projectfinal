@@ -6,7 +6,7 @@ import {
 } from "../../api/create.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getItem } from "../../utilitaire/storage.utilitaire";
-import { SortArrayById } from "../../utilitaire/sort.utilitaire";
+import { sortArrayById } from "../../utilitaire/sort.utilitaire";
 
 export const postNote = createAsyncThunk(
   "note/create",
@@ -126,7 +126,7 @@ export const noteSlice = createSlice({
           ...state,
           loading: false,
           ...state,
-          notes: SortArrayById([
+          notes: sortArrayById([
             ...state.notes.filter(
               (elt) => elt.id !== parseInt(action.payload.id)
             ),
@@ -137,7 +137,7 @@ export const noteSlice = createSlice({
         console.log(action.payload);
         return {
           ...state,
-          notes: SortArrayById([
+          notes: sortArrayById([
             action.payload,
             ...state.notes.filter(
               (elt) => elt.id !== parseInt(action.payload.id)

@@ -65,18 +65,23 @@ const CreateNote = () => {
 
   return (
     <div className={`${mc.noteContainer}`}>
-      <button onClick={toggleModal}>Crée Nouvelle Note</button>
+      <button className={`submit ${mc.submit}`} onClick={toggleModal}>
+        Crée Nouvelle Note
+      </button>
 
       {showModalModified && (
         <section className={`${mc.form}`}>
           <div className={`overlay`}>
             <div className={`modal`}>
+              <div className={`buttonCard flex jc-end`}>
+                <button onClick={toggleModalModified}>X</button>
+              </div>
               <form
                 onSubmit={handleUpdate}
                 className="flex direction-column jc-end"
               >
                 <h2>Modification Note</h2>
-                <span onClick={() => setEditNote(null)}>X</span>
+
                 <input
                   type="text"
                   placeholder="titre"
@@ -106,7 +111,6 @@ const CreateNote = () => {
                 />
                 <input className={`submit`} type="submit" />
               </form>
-              <button onClick={toggleModalModified}>Fermer</button>
             </div>
           </div>
         </section>
@@ -115,6 +119,9 @@ const CreateNote = () => {
         <section>
           <div className={`overlay`}>
             <div className={`modal`}>
+              <div className={`buttonCard flex jc-end`}>
+                <button onClick={toggleModal}>X</button>
+              </div>
               <form
                 onSubmit={handleChange}
                 className={`flex direction-column  jc-end`}
@@ -145,7 +152,6 @@ const CreateNote = () => {
                 />
                 <input className={`submit`} type="submit" />
               </form>
-              <button onClick={toggleModal}>Fermer</button>
             </div>
           </div>
         </section>

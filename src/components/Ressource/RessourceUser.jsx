@@ -5,7 +5,7 @@ import {
   categoryChange,
   postRessource,
   updateRessource,
-  getCategorieWithRessource,
+  getRessourceByUserId,
 } from "../../redux/reducers/ressource.slice";
 import { useEffect, useState } from "react";
 import mc from "./createRessource.module.scss";
@@ -20,15 +20,17 @@ const RessourceUser = () => {
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
-  const { title, url, description, categoriesRessourcesByUser } = useSelector(
+  const { title, url, description, ressourcesByUserId } = useSelector(
     (store) => store.ressource
   );
   const { users } = useSelector((store) => store.persistedReducer);
   const { categoriesRessource } = useSelector((store) => store.categories);
+  console.log(categoriesRessource);
 
   useEffect(() => {
-    dispatch(getCategorieWithRessource(users.id));
+    dispatch(getRessourceByUserId(users.id));
   }, [users.id]);
+  console.log(ressourcesByUserId);
 
   useEffect(() => {
     dispatch(getCategorie());
@@ -44,11 +46,19 @@ const RessourceUser = () => {
 
   const handleChange = async (e) => {
     e.preventDefault();
-    await dispatch(postRessource(handleRessource));
-    setHandleRessource(null);
+    dispatch(postRessource(handleRessource));
+    toggleModal();
   };
+  console.log(handleRessource);
 
-  const handleShare = () => {};
+  const handleShare = (id) => {
+    dispatch(
+      updateRessource({
+        shareRessource: true,
+        id: id,
+      })
+    );
+  };
 
   // supprimer ressources
   const deleteRessourceId = (id) => {
@@ -58,6 +68,7 @@ const RessourceUser = () => {
 
   const toggleModal = () => {
     setShowModal(!showModal);
+    setHandleRessource({});
   };
 
   const handleModificated = (
@@ -67,6 +78,7 @@ const RessourceUser = () => {
     editDescription,
     editCategorieId
   ) => {
+    toggleModal();
     setHandleRessource({
       id: id,
       title: editTitle,
@@ -80,11 +92,9 @@ const RessourceUser = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     setHandleRessource({ ...handleRessource, userId: users.id });
-
     dispatch(updateRessource(handleRessource));
     setHandleRessource(null);
   };
-  console.log(categoriesRessourcesByUser);
 
   // ajoute ds les calculs la durée de temps du lien
   // acces de certaines fonctionnalités que pour l'admin
@@ -92,18 +102,22 @@ const RessourceUser = () => {
   // retravailler les liens mettre une condition ternaire sur le fait si elles ont deja le http ou bien le rajouter au lien qu'elle donnent
   return (
     <div className={`${mc.ressourceUser}`}>
-      <button onClick={toggleModal}>Crée Nouvelle Ressource</button>
+      <button className={`submit ${mc.submit}`} onClick={toggleModal}>
+        Crée Nouvelle Ressource
+      </button>
       {showModal && (
         <section className={`${mc.form}`}>
           {visible ? (
             <div className={`overlay`}>
               <div className={`modal`}>
+                <div className={`buttonCard flex jc-end `}>
+                  <button onClick={toggleModal}>X</button>
+                </div>
                 <form
                   onSubmit={handleUpdate}
                   className={`flex direction-column  jc-end`}
                 >
                   <h2>Modification Ressource</h2>
-                  <span onClick={() => setRessourceUpdate(null)}>X</span>
                   <input
                     type="text"
                     placeholder="title"
@@ -142,12 +156,14 @@ const RessourceUser = () => {
                   />
                   <input className={`submit`} type="submit" />
                 </form>
-                <button onClick={toggleModal}>Fermer</button>
               </div>
             </div>
           ) : (
             <div className={`overlay`}>
               <div className={`modal`}>
+                <div className={`buttonCard flex jc-end `}>
+                  <button onClick={toggleModal}>X</button>
+                </div>
                 <form
                   onSubmit={handleChange}
                   className={`flex direction-column  jc-end`}
@@ -163,13 +179,11 @@ const RessourceUser = () => {
                     id=""
                   >
                     <option value="">Sélectionnez une catégorie</option>
-                    {categoriesRessource.map((element) =>
-                      element.categorie.map((elt) => (
-                        <option key={elt.id} value={elt.id}>
-                          {elt.name}
-                        </option>
-                      ))
-                    )}
+                    {categoriesRessource.map((elt) => (
+                      <option key={elt.id} value={elt.id}>
+                        {elt.name}
+                      </option>
+                    ))}
                   </select>
                   <input
                     type="text"
@@ -213,58 +227,73 @@ const RessourceUser = () => {
                   />
                   <input className={`submit`} type="submit" />
                 </form>
-                <button onClick={toggleModal}>Fermer</button>
               </div>
             </div>
           )}
         </section>
       )}
 
-      <section className={`${mc.ressource} flex flex-wrap jc-between`}>
-        {categoriesRessourcesByUser.length === 0 ? (
+      <section className={`${mc.ressource} `}>
+        {categoriesRessource.length === 0 ? (
           <p>Tu n'as pas encore publier de ressources sur ta page !! </p>
         ) : (
-          categoriesRessourcesByUser.map((categorie) => (
+          categoriesRessource.map((categorie) => (
             <>
               <h1>{categorie.name}</h1>
-              {categorie.Ressources.map((ressource) => (
-                <article
-                  className={`${mc.card} container-cards`}
-                  key={ressource.id}
-                >
-                  <div className={`buttonCard flex ai-center jc-end`}>
-                    <button
-                      onClick={() => {
-                        deleteRessourceId(ressource.id);
-                      }}
-                    >
-                      X
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleModificated(
-                          ressource.id,
-                          ressource.title,
-                          ressource.url,
-                          ressource.description,
-                          ressource.categorieId
-                        );
-                      }}
-                    >
-                      <img
-                        src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
-                        alt="settings"
-                      />
-                    </button>
-                  </div>
-                  <p>Titre :{ressource.title}</p>
-                  <p>
-                    Lien : <a href={ressource.url}>{ressource.url}</a>
-                  </p>
-                  <p>Description :{ressource.description}</p>
-                  <button onClick={handleShare}>Partage</button>
-                </article>
-              ))}
+              <div className={`${mc.categorieRessource}`}>
+                {ressourcesByUserId.map((ressource) => {
+                  if (categorie.id === ressource.categorieId) {
+                    return (
+                      <article className={`${mc.card} `} key={ressource.id}>
+                        <div className={`buttonCard flex ai-center jc-end`}>
+                          <button
+                            onClick={() => {
+                              deleteRessourceId(ressource.id);
+                            }}
+                          >
+                            X
+                          </button>
+                          <button
+                            onClick={() => {
+                              handleModificated(
+                                ressource.id,
+                                ressource.title,
+                                ressource.url,
+                                ressource.description,
+                                ressource.categorieId
+                              );
+                            }}
+                          >
+                            <img
+                              src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
+                              alt="settings"
+                            />
+                          </button>
+                        </div>
+                        <p className={`${mc.title}`}>
+                          Titre :{ressource.title}
+                        </p>
+                        <p className={`${mc.url}`}>
+                          Lien : <a href={ressource.url}>{ressource.url}</a>
+                        </p>
+                        <p className={`${mc.description}`}>
+                          Description :{ressource.description}
+                        </p>
+                        <button
+                          className={`submit `}
+                          onClick={() => {
+                            handleShare(ressource.id);
+                          }}
+                        >
+                          Partage
+                        </button>
+                        <p>{ressource.shareRessource ? "true" : "false"}</p>
+                      </article>
+                    );
+                  }
+                })}
+              </div>
+              )
             </>
           ))
         )}

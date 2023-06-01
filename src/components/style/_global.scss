@@ -13,7 +13,7 @@
 
 body{
   font-size: 1.6rem;
-  font-family: Laviossa-font;
+  font-family: Roboto;
 }
 
 .container{
@@ -25,17 +25,17 @@ h1{
   font-size: 5rem;
   text-align: center;
 font-size: var(--text-title1);
-  color: var(--blue-color)
+
 
 }
 h2{
 font-size: var(--text-title2);
-  color: var(--blue-color)
+
 
 }
 h3{
 font-size: var(--text-title13);
-  color: var(--blue-color)
+
 }
 
 ul{
@@ -127,10 +127,20 @@ input{
   border: 1px solid #0C6291;
   border-radius: 1rem;
   padding:1rem 2rem;
-
   &:hover{
     background-color: #0C6291;
     color: #ffffff;
+  }
+}
+
+.buttonCard{
+  margin:.5rem .2rem;
+  padding:.5rem;
+  font-weight: bold;
+  & button{
+    all:unset;
+    width:20px;
+
   }
 }
 
@@ -141,15 +151,7 @@ input{
   margin:0 auto;
 }
 
-.buttonCard{
-  margin:.5rem .2rem;
-  padding:.5rem;
-  & button{
-    all:unset;
-    width:20px;
 
-  }
-}
 
 .overlay{
   position:fixed;

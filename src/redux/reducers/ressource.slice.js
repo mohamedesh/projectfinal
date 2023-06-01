@@ -6,7 +6,10 @@ import {
 } from "../../api/create.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getItem } from "../../utilitaire/storage.utilitaire";
-import { SortArrayById } from "../../utilitaire/sort.utilitaire";
+import {
+  sortArrayById,
+  sortArrayByCategorieId,
+} from "../../utilitaire/sort.utilitaire";
 import categorie from "../../components/Categorie/Categorie";
 
 export const postRessource = createAsyncThunk(
@@ -29,13 +32,13 @@ export const postRessource = createAsyncThunk(
   }
 );
 
-export const getRessource = createAsyncThunk(
-  "ressource/display",
-  async (_, thunkApi) => {
+export const getRessourceByUserId = createAsyncThunk(
+  "ressource/displayAll",
+  async (userId, thunkApi) => {
     const { fulfillWithValue, rejectWithValue } = thunkApi;
     const token = getItem("token");
     const { status, data, error } = await getRequest(
-      `ressource/display`,
+      `ressource/displayAll/${userId}`,
       token
     );
     console.log(data);
@@ -69,11 +72,12 @@ export const updateRessource = createAsyncThunk(
   "ressource/update",
   async (ressource, thunkApi) => {
     const { fulfillWithValue, rejectWithValue } = thunkApi;
-    const { title, url, description, id } = ressource;
+    const { title, url, description, id, share } = ressource;
+    console.log(id);
     const token = getItem("token");
     const { status, data, error } = await updateRequest(
       `ressource/update/${id}`,
-      { title, url, description },
+      { title, url, description, share },
       token
     );
     console.log(data);
@@ -85,22 +89,22 @@ export const updateRessource = createAsyncThunk(
   }
 );
 
-export const getCategorieWithRessource = createAsyncThunk(
-  "categorie/displayWithRessource",
-  async (userId, thunkApi) => {
-    const { fulfillWithValue, rejectWithValue } = thunkApi;
-    const token = getItem("token");
-    const { status, data, error } = await getRequest(
-      `categorie/displayWithRessource/${userId}`,
-      token
-    );
-    return error
-      ? rejectWithValue(
-          `Cannot display Categorie - Error Status ${status} - ${error}`
-        )
-      : fulfillWithValue(data);
-  }
-);
+// export const getCategorieWithRessource = createAsyncThunk(
+//   "categorie/displayWithRessource",
+//   async (userId, thunkApi) => {
+//     const { fulfillWithValue, rejectWithValue } = thunkApi;
+//     const token = getItem("token");
+//     const { status, data, error } = await getRequest(
+//       `categorie/displayWithRessource/${userId}`,
+//       token
+//     );
+//     return error
+//       ? rejectWithValue(
+//           `Cannot display Categorie - Error Status ${status} - ${error}`
+//         )
+//       : fulfillWithValue(data);
+//   }
+// );
 
 const bodyRessource = {
   title: "",
@@ -116,7 +120,7 @@ export const ressourceSlice = createSlice({
     description: "",
     loading: false,
     ressources: [],
-    categoriesRessourcesByUser: [],
+    ressourcesByUserId: [],
   },
   // ici c'est les actions,ce qui va etre le setter du state
   reducers: {
@@ -143,39 +147,50 @@ export const ressourceSlice = createSlice({
         return {
           ...state,
           loading: false,
-          categoriesRessourcesByUser: [
-            ...state.categoriesRessourcesByUser,
-            state.categoriesRessourcesByUser[0].Ressources.push(
-              action.payload.ressource
+          ressourcesByUserId: [
+            ...state.ressourcesByUserId,
+            action.payload.ressource,
+          ],
+        };
+      })
+      .addCase(getRessourceByUserId.fulfilled, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          ressourcesByUserId: action.payload,
+        };
+      })
+      .addCase(deleteRessource.fulfilled, (state, action) => {
+        console.log(action.payload);
+        return {
+          ...state,
+          loading: false,
+          ressourcesByUserId: [
+            ...state.ressourcesByUserId.filter(
+              (elt) => elt.id !== parseInt(action.payload.id)
             ),
           ],
         };
       })
-      .addCase(getRessource.fulfilled, (state, action) => {
-        return { ...state, loading: false, ressources: [...action.payload] };
-      })
-      .addCase(deleteRessource.fulfilled, (state, action) => {
+      .addCase(updateRessource.fulfilled, (state, action) => {
         return {
           ...state,
           loading: false,
-          ...state,
-          ressources: SortArrayById([
-            ...state.ressources.filter(
-              (elt) => elt.id !== parseInt(action.payload.id)
+          ressourcesByUserId: sortArrayById([
+            ...state.ressourcesByUserId.filter(
+              (elt) => elt.id !== parseInt(action.payload.id),
+              action.payload
             ),
           ]),
         };
-      })
-      .addCase(updateRessource.fulfilled, (state, action) => {
-        return { ...state, loading: false };
-      })
-      .addCase(getCategorieWithRessource.fulfilled, (state, action) => {
-        console.log(action.payload);
-        return {
-          ...state,
-          categoriesRessourcesByUser: action.payload.categorie,
-        };
       });
+    // .addCase(getCategorieWithRessource.fulfilled, (state, action) => {
+    //   console.log(action.payload);
+    //   return {
+    //     ...state,
+    //     categoriesRessourcesByUser: action.payload.categorie,
+    //   };
+    // });
   },
 });
 

@@ -75,23 +75,34 @@ const Header = () => {
       ) : (
         <div className={mc.connect}>
           <div>
-            <button onClick={handleButtonSignIn}>Connexion</button>
+            <button className={`submit`} onClick={handleButtonSignIn}>
+              Connexion
+            </button>
+
             {showSignIn && (
               <div className={`overlay`}>
                 <div className={`modal`}>
+                  <div className={`buttonCard flex jc-end`}>
+                    <button onClick={handleButtonSignIn}>X</button>
+                  </div>
+
                   <SignIn />
-                  <button onClick={handleButtonSignIn}>Fermer</button>
                 </div>
               </div>
             )}
           </div>
           <div>
-            <button onClick={handleButtonSignUp}>Inscription</button>
+            <button className={`submit`} onClick={handleButtonSignUp}>
+              Inscription
+            </button>
+
             {showSignUp && (
               <div className={`overlay`}>
                 <div className={`modal`}>
+                  <div className={`buttonCard flex jc-end`}>
+                    <button onClick={handleButtonSignUp}>X</button>
+                  </div>
                   <SignUp />
-                  <button onClick={handleButtonSignUp}>Fermer</button>
                 </div>
               </div>
             )}

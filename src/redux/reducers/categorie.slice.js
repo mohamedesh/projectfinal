@@ -32,7 +32,7 @@ export const categorieSlice = createSlice({
     builder
       .addCase(getCategorie.fulfilled, (state, action) => {
         console.log(action.payload);
-        return { ...state, categoriesRessource: [action.payload] };
+        return { ...state, categoriesRessource: action.payload.categorie };
       })
       .addCase(getCategorie.rejected, (state, action) => {
         return { ...state, categoriesRessource: [action.payload] };
