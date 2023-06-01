@@ -35,7 +35,7 @@ const SignUp = () => {
     setPseudo(e.target.value);
   };
 
-  // const { surname, name, pseudo, password, email } = useSelector(
+  // const{ surname, name, pseudo, password, email } = useSelector(
   //   (store) => store.user
   // );
 

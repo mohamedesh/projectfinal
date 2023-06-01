@@ -25,7 +25,6 @@ const CreateNote = () => {
     e.preventDefault();
     dispatch(postNote({ title, description, contain }));
     setShowModal(!showModal);
-    console.log("cc");
   };
 
   useEffect(() => {
@@ -156,36 +155,40 @@ const CreateNote = () => {
           </div>
         </section>
       )}
-      <section className={`${mc.note} flex flex-wrap jc-between`}>
-        {notes.length === 0 ? (
-          <p>Pas de note publier pour le moment</p>
-        ) : (
-          notes.map((note) => (
-            <article className={`${mc.card}`} key={note.id}>
-              <div className={`buttonCard flex ai-center jc-end`}>
-                <button onClick={() => deleteNoteId(note.id)}>X</button>
-                <button
-                  onClick={() =>
-                    handleModificated(
-                      note.id,
-                      note.title,
-                      note.description,
-                      note.contain
-                    )
-                  }
-                >
-                  <img
-                    src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
-                    alt="settings"
-                  />
-                </button>
-              </div>
-              <p>Titre : {note.title}</p>
-              <p>Description : {note.description}</p>
-              <p>Contenu : {note.contain}</p>
-            </article>
-          ))
-        )}
+      <section className={`${mc.note}`}>
+        <div className={`${mc.blockNote}`}>
+          {notes.length === 0 ? (
+            <p>Pas de note publier pour le moment</p>
+          ) : (
+            notes.map((note) => (
+              <article className={`${mc.card}`} key={note.id}>
+                <div className={`buttonCard flex ai-center jc-end`}>
+                  <button onClick={() => deleteNoteId(note.id)}>X</button>
+                  <button
+                    onClick={() =>
+                      handleModificated(
+                        note.id,
+                        note.title,
+                        note.description,
+                        note.contain
+                      )
+                    }
+                  >
+                    <img
+                      src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
+                      alt="settings"
+                    />
+                  </button>
+                </div>
+                <p className={`${mc.title}`}>{note.title}</p>
+                <p className={`${mc.description}`}>
+                  Description : {note.description}
+                </p>
+                <p className={`${mc.contain}`}>{note.contain}</p>
+              </article>
+            ))
+          )}
+        </div>
       </section>
     </div>
   );

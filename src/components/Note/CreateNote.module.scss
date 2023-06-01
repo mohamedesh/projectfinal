@@ -6,10 +6,11 @@
   }
   & .note{
     & .card{
-      width:100%;
       border: 1px solid #0C6291;
-      border-radius:2rem;
+      border-radius:1.6rem;
       margin:2rem;
+      position: relative;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
       & p {
         padding-left:1rem;
         padding-bottom:2rem;
@@ -23,5 +24,39 @@
     padding:2rem;
   }
 }
+
+@media screen and (min-width: 800px) {
+  .noteContainer{
+    & .note {
+      & .blockNote {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        & .card {
+          width:45%;
+          & .title{
+            text-align: center;
+            font-weight: bold;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .noteContainer{
+    & .note {
+      & .blockNote {
+        justify-content: center;
+        & .card {
+          width:23%;
+        }
+      }
+    }
+  }
+}
+
 
 

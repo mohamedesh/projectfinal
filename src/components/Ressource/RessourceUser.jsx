@@ -69,6 +69,7 @@ const RessourceUser = () => {
   const toggleModal = () => {
     setShowModal(!showModal);
     setHandleRessource({});
+    setVisible(false);
   };
 
   const handleModificated = (
@@ -94,6 +95,7 @@ const RessourceUser = () => {
     setHandleRessource({ ...handleRessource, userId: users.id });
     dispatch(updateRessource(handleRessource));
     setHandleRessource(null);
+    setShowModal(null);
   };
 
   // ajoute ds les calculs la durée de temps du lien
@@ -105,7 +107,7 @@ const RessourceUser = () => {
       <button className={`submit ${mc.submit}`} onClick={toggleModal}>
         Crée Nouvelle Ressource
       </button>
-      {showModal && (
+      {showModal ? (
         <section className={`${mc.form}`}>
           {visible ? (
             <div className={`overlay`}>
@@ -231,7 +233,7 @@ const RessourceUser = () => {
             </div>
           )}
         </section>
-      )}
+      ) : null}
 
       <section className={`${mc.ressource} `}>
         {categoriesRessource.length === 0 ? (
@@ -270,11 +272,9 @@ const RessourceUser = () => {
                             />
                           </button>
                         </div>
-                        <p className={`${mc.title}`}>
-                          Titre :{ressource.title}
-                        </p>
+                        <p className={`${mc.title}`}>{ressource.title}</p>
                         <p className={`${mc.url}`}>
-                          Lien : <a href={ressource.url}>{ressource.url}</a>
+                          <a href={ressource.url}>{ressource.url}</a>
                         </p>
                         <p className={`${mc.description}`}>
                           Description :{ressource.description}

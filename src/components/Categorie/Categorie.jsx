@@ -19,13 +19,11 @@ const Categorie = () => {
   return (
     <div>
       <h1>Catégories</h1>
-      {categoriesRessource.map((element) =>
-        element.categorie.map((elt) => (
-          <article key={elt.id}>
-            <p>{elt.name}</p>
-          </article>
-        ))
-      )}
+      {categoriesRessource.map((elt) => (
+        <article key={elt.id}>
+          <p>{elt.name}</p>
+        </article>
+      ))}
     </div>
   );
 };

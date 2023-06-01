@@ -62,6 +62,9 @@ const Header = () => {
           <li>
             <NavLink to={"/categorie"}>Catégories</NavLink>
           </li>
+          <li>
+            <NavLink to={"/discovery"}>Découvrir</NavLink>
+          </li>
         </ul>
       </nav>
       {isLogged ? (

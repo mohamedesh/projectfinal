@@ -50,6 +50,24 @@ export const getRessourceByUserId = createAsyncThunk(
   }
 );
 
+export const getDiscoveryRessources = createAsyncThunk(
+  "ressource/displayDiscovery",
+  async (shareRessource, thunkApi) => {
+    const { fulfillWithValue, rejectWithValue } = thunkApi;
+    const token = getItem("token");
+    const { status, data, error } = await getRequest(
+      `ressource/displayDiscovery`,
+      token
+    );
+    console.log(data);
+    return error
+      ? rejectWithValue(
+          `Cannot display Ressource in discovery - Error Status ${status} - ${error}`
+        )
+      : fulfillWithValue(data);
+  }
+);
+
 export const deleteRessource = createAsyncThunk(
   "ressource/delete",
   async (RessourceId, thunkApi) => {
@@ -92,9 +110,9 @@ export const updateRessource = createAsyncThunk(
 // export const getCategorieWithRessource = createAsyncThunk(
 //   "categorie/displayWithRessource",
 //   async (userId, thunkApi) => {
-//     const { fulfillWithValue, rejectWithValue } = thunkApi;
+//     const{ fulfillWithValue, rejectWithValue } = thunkApi;
 //     const token = getItem("token");
-//     const { status, data, error } = await getRequest(
+//     const{ status, data, error } = await getRequest(
 //       `categorie/displayWithRessource/${userId}`,
 //       token
 //     );
@@ -121,6 +139,7 @@ export const ressourceSlice = createSlice({
     loading: false,
     ressources: [],
     ressourcesByUserId: [],
+    shareRessources: [],
   },
   // ici c'est les actions,ce qui va etre le setter du state
   reducers: {
@@ -173,15 +192,24 @@ export const ressourceSlice = createSlice({
         };
       })
       .addCase(updateRessource.fulfilled, (state, action) => {
+        console.log(action.payload);
         return {
           ...state,
           loading: false,
           ressourcesByUserId: sortArrayById([
             ...state.ressourcesByUserId.filter(
-              (elt) => elt.id !== parseInt(action.payload.id),
-              action.payload
+              (elt) => elt.id !== parseInt(action.payload.id)
             ),
+            action.payload,
           ]),
+        };
+      })
+      .addCase(getDiscoveryRessources.fulfilled, (state, action) => {
+        console.log(action.payload);
+        return {
+          ...state,
+          loading: false,
+          shareRessources: action.payload.ressource,
         };
       });
     // .addCase(getCategorieWithRessource.fulfilled, (state, action) => {

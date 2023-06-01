@@ -81,12 +81,6 @@ export const updateNote = createAsyncThunk(
   }
 );
 
-const bodyNote = {
-  title: "",
-  description: "",
-  contain: "",
-};
-
 export const noteSlice = createSlice({
   name: "note",
   initialState: {
@@ -114,8 +108,12 @@ export const noteSlice = createSlice({
         //
         return {
           ...state,
+
           loading: false,
           notes: [...state.notes, action.payload.note],
+          title: "",
+          description: "",
+          contain: "",
         };
       })
       .addCase(getNotes.fulfilled, (state, action) => {

@@ -1,4 +1,4 @@
-import { API_URL } from "../components/const /api-url.const";
+import { API_URL } from "../const/api-url.const";
 import { getItem, setItem } from "../utilitaire/storage.utilitaire";
 // envoie les information qu'il faut au back
 const postRequest = async (url, body, token = null) => {

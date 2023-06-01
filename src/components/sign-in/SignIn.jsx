@@ -10,7 +10,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const { password, email } = useSelector((store) => store.user);
+  // const{ password, email } = useSelector((store) => store.user);
   // const handleChangeField = (key, value) => {
   //   dispatch(newState({ key, value }));
   // };
