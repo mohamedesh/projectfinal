@@ -15,9 +15,16 @@
 
 .ressourceUser{
   & .submit{
-    width:20%;
-    margin:2rem;
-    padding:2rem;
+    all:unset;
+    margin:1rem;
+    padding:1.5rem 2rem ;
+    border:1px solid #0C6291;
+    color :  #0C6291;
+    border-radius: 50%;
+    &:hover{
+      background-color:  #0C6291;
+      color: #ffffff;
+    }
   }
   & .ressource {
     & .card{
@@ -34,19 +41,12 @@
       & .title{
         text-align: center;
         font-weight: bold;
-
       }
       & .url{
         text-align: center;
         font-weight: bold;
-
       }
-      & .description{
 
-      }
-      & button{
-
-      }
   }}
   & .form{
     border-left:1px solid black;

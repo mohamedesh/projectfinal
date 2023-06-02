@@ -40,7 +40,6 @@ const updateRequest = async (url, body, token = null) => {
 };
 
 const getRequest = async (url, token = null) => {
-  console.log(token);
   const config = {
     method: "GET",
     headers: {
@@ -60,7 +59,6 @@ const request = async (url, config) => {
     const response = await fetch(`${API_URL}${url}`, config);
     status = response.status;
     data = await response.json();
-    console.log(data);
   } catch (e) {
     error = e.message;
   } finally {

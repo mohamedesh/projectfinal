@@ -1,0 +1,56 @@
+.card{
+  border:1px solid var(--blue-color);
+  border-radius: 1.6rem;
+  text-align: center;
+  margin:2rem;
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  & p {
+    padding:1rem;
+    text-align: start;
+  }
+  & .title{
+    text-align: center;
+    font-weight: bold;
+  }
+  & .url{
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.containerBtn {
+  & .btn {
+      //color: var(--blue-color);
+    width: 15%;
+      &:hover {
+        color: #ffffff;
+      }
+  }
+}
+
+@media screen and (min-width: 800px) {
+
+       .categorieRessource {
+        display: flex;
+        flex-wrap: wrap;
+         justify-content: center;
+        & .card {
+          width:45%;
+        }
+      }
+      .containerBtn{
+        & button{
+          width:10%
+        }
+      }
+}
+
+@media screen and (min-width: 1024px) {
+
+       .categorieRessource {
+        & .card {
+          width:23%;
+        }
+      }
+}

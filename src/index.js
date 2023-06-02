@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import App from "./components/app/App";
-// import DashboardUser from "./components/DashBoard/DashboardUser";
+// import DashboardUser from "./components/dashBoard/DashboardUser";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

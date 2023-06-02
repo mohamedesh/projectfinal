@@ -1,10 +1,11 @@
 import React from "react";
 import mc from "./accueil.module.scss";
 import Login from "../login/Login";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 const Accueil = () => {
+  const { isLogged } = useSelector((store) => store.persistedReducer);
   return (
-    <div className={`${mc.homepage} container `}>
+    <main className={`${mc.homepage} container `}>
       <h1>Good Corner : Le trésor numérique des liens qui vous inspirent </h1>
       <section className={`${mc.home}`}>
         <article className={mc.text}>
@@ -18,12 +19,13 @@ const Accueil = () => {
             frontières de la connaissance.
           </p>
         </article>
-
-        <article className={mc.login}>
-          <Login />
-        </article>
+        {isLogged ? null : (
+          <article className={mc.login}>
+            <Login />
+          </article>
+        )}
       </section>
-    </div>
+    </main>
   );
 };
 

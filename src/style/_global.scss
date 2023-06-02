@@ -2,8 +2,8 @@
   font-size: 62.5%;
   --text-default: 1.5rem;
   --text-title1: 3.6rem;
-  --text-title2: 2.4rem;
-  --text-title3: 1.8rem;
+  --text-title2: 2.6rem;
+  --text-title3: 2.2rem;
   --blue-color:#0C6291;
 }
 
@@ -17,25 +17,29 @@ body{
 }
 
 .container{
-  max-width:1500px;
+  max-width:1200px;
   margin: 0 auto;
 }
 
 h1{
-  font-size: 5rem;
   text-align: center;
 font-size: var(--text-title1);
-
-
+  color: #0C6291;
+  font-weight: 800;
 }
 h2{
 font-size: var(--text-title2);
-
+  color: #0C6291;
+  font-weight: 600;
 
 }
 h3{
-font-size: var(--text-title13);
-
+font-size: var(--text-title3);
+  color: #0C6291;
+  font-weight: 400;
+  border-top-left-radius: 1.6rem;
+  border-top-right-radius: 1.6rem;
+  padding: 1.5rem 0rem;
 }
 
 ul{
@@ -110,12 +114,6 @@ input{
   font-family: "calligrapher-font";
   src: url("../font/Calligrapher-JRxaE.ttf");
 }
-
-@font-face {
-  font-family: "Laviossa-font";
-  src: url("../font/Laviossa-Medium.otf");
-}
-
 // button
 
 .submit{
@@ -152,7 +150,7 @@ input{
 }
 
 
-
+// modal
 .overlay{
   position:fixed;
   top:0;
@@ -174,4 +172,11 @@ input{
   z-index:10001;
 }
 
-
+// color title cards
+//.Nourritures{
+//  background-color:#910C55;
+//}
+//
+//.Tourisme{
+//  background-color: #0C9191;
+//}

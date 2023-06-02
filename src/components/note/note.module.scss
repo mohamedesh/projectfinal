@@ -1,8 +1,12 @@
 .noteContainer{
   & .submit{
-    width:20%;
+    all:unset;
     margin:2rem;
     padding:2rem;
+    border:1px solid #0C6291;
+    //background-color: #0C6291;
+    color :  #0C6291;
+    border-radius: 50%;
   }
   & .note{
     & .card{

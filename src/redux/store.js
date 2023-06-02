@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import usersSlice from "./reducers/user.slice";
 import ressourceSlice from "./reducers/ressource.slice";
 import noteSlice from "./reducers/note.slice";
-import buttonSlice from "./reducers/button.slice";
 import categorieSlice from "./reducers/categorie.slice";
 import {
   persistReducer,
@@ -27,7 +26,6 @@ export const store = configureStore({
     persistedReducer,
     ressource: ressourceSlice,
     note: noteSlice,
-    button: buttonSlice,
     categories: categorieSlice,
   },
   middleware: (getDefaultMiddleware) =>

@@ -1,11 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import mc from "./header.module.scss";
-import { removeItem, setItem } from "../../utilitaire/storage.utilitaire";
+import { removeItem } from "../../utilitaire/storage.utilitaire";
 import { useState } from "react";
 import SignIn from "../sign-in/SignIn";
 import { useDispatch, useSelector } from "react-redux";
-import { showButton, hideButton } from "../../redux/reducers/button.slice";
-import SignUp from "../sign-up/signUp";
+import SignUp from "../sign-up/SignUp";
 import { userLogout } from "../../redux/reducers/user.slice";
 
 const Header = () => {
@@ -20,11 +19,9 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const { isLogged, users } = useSelector((store) => store.persistedReducer);
-  console.log(isLogged);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
 
-  const handleLogin = () => {};
   const handleButtonSignIn = () => {
     setShowSignIn(!showSignIn);
   };
@@ -46,7 +43,6 @@ const Header = () => {
           <span className={`${mc.bar} `}></span>
         </label>
 
-        {/* Contenu de la barre latérale */}
         <ul
           className={`flex jc-evenly direction-column ai-center ${mc.navlist} `}
         >
@@ -57,7 +53,7 @@ const Header = () => {
             <NavLink to={"/about"}>A propos </NavLink>
           </li>
           <li>
-            <NavLink to={"/dashboard"}>Page de bord</NavLink>
+            <NavLink to={"/dashboard"}>Tableau de bord</NavLink>
           </li>
           <li>
             <NavLink to={"/discovery"}>Découvrir</NavLink>
@@ -65,7 +61,7 @@ const Header = () => {
         </ul>
       </nav>
       {isLogged ? (
-        <div className={mc.connect}>
+        <div className={`${mc.connect} ${mc.nameUser}`}>
           <p>{users.surname}</p>
           <p>{users.name}</p>
           <button className={mc.logout} onClick={logout}>
@@ -85,7 +81,6 @@ const Header = () => {
                   <div className={`buttonCard flex jc-end`}>
                     <button onClick={handleButtonSignIn}>X</button>
                   </div>
-
                   <SignIn />
                 </div>
               </div>

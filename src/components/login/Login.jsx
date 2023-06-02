@@ -1,16 +1,12 @@
-import SignUp from "../sign-up/signUp";
+import SignUp from "../sign-up/SignUp";
 import SignIn from "../sign-in/SignIn";
-import Header from "../header/Header";
 import mc from "./login.module.scss";
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { echapValues } from "../../redux/reducers/user.slice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [button, setButton] = useState(false);
-  const [active, setActive] = useState(false);
   const [toggleSignIn, setToggleSignIn] = useState(false);
   const toggle = () => {
     dispatch(echapValues());
@@ -22,7 +18,7 @@ const Login = () => {
         <>
           <h2>Créer un compte</h2>
           <SignUp />
-          <p>
+          <p className={`${mc.account}`}>
             Vous avez déjà un compte :
             <button className={`${mc.button}`} onClick={() => toggle()}>
               Se connecter ?

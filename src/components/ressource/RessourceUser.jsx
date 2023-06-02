@@ -8,14 +8,12 @@ import {
   getRessourceByUserId,
 } from "../../redux/reducers/ressource.slice";
 import { useEffect, useState } from "react";
-import mc from "./createRessource.module.scss";
+import mc from "./ressource.module.scss";
 
 import { getCategorie } from "../../redux/reducers/categorie.slice";
 
 const RessourceUser = () => {
-  const [ressourcePost, setRessourcePost] = useState();
   const [handleRessource, setHandleRessource] = useState({});
-  const [ressourceUpdate, setRessourceUpdate] = useState();
   const [visible, setVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [shareRessource, setShareRessource] = useState(false);
@@ -31,7 +29,6 @@ const RessourceUser = () => {
   useEffect(() => {
     dispatch(getRessourceByUserId(users.id));
   }, [users.id]);
-  console.log(ressourcesByUserId);
 
   useEffect(() => {
     dispatch(getCategorie());
@@ -50,9 +47,8 @@ const RessourceUser = () => {
     dispatch(postRessource(handleRessource));
     toggleModal();
   };
-  console.log(handleRessource);
 
-  const handleShare = (id) => {
+  const handleShare = async (id) => {
     setShareRessource(!shareRessource);
     dispatch(
       updateRessource({
@@ -61,8 +57,6 @@ const RessourceUser = () => {
       })
     );
   };
-  console.log(shareRessource);
-
   // supprimer ressources
   const deleteRessourceId = (id) => {
     dispatch(deleteRessource(id));
@@ -101,14 +95,10 @@ const RessourceUser = () => {
     setShowModal(null);
   };
 
-  // ajoute ds les calculs la durée de temps du lien
-  // acces de certaines fonctionnalités que pour l'admin
-  // faire en sorte de pouvoir bloquer des sites malveillant comme des trucs bizar ou autres
-  // retravailler les liens mettre une condition ternaire sur le fait si elles ont deja le http ou bien le rajouter au lien qu'elle donnent
   return (
     <div className={`${mc.ressourceUser}`}>
-      <button className={`submit ${mc.submit}`} onClick={toggleModal}>
-        Crée Nouvelle Ressource
+      <button className={` ${mc.submit}`} onClick={toggleModal}>
+        +
       </button>
       {showModal ? (
         <section className={`${mc.form}`}>
@@ -123,6 +113,21 @@ const RessourceUser = () => {
                   className={`flex direction-column  jc-end`}
                 >
                   <h2>Modification Ressource</h2>
+                  <select
+                    className={`${mc.categorie}`}
+                    onChange={(e) => {
+                      handleCategoryChange(e);
+                    }}
+                    name=""
+                    id=""
+                  >
+                    <option value="">Sélectionnez une catégorie</option>
+                    {categoriesRessource.map((elt) => (
+                      <option key={elt.id} value={elt.id}>
+                        {elt.name}
+                      </option>
+                    ))}
+                  </select>
                   <input
                     type="text"
                     placeholder="title"
@@ -243,7 +248,7 @@ const RessourceUser = () => {
           <p>Tu n'as pas encore publier de ressources sur ta page !! </p>
         ) : (
           categoriesRessource.map((categorie) => (
-            <>
+            <div key={categorie.id}>
               <h2>{categorie.name}</h2>
               <div className={`${mc.categorieRessource}`}>
                 {ressourcesByUserId.map((ressource) => {
@@ -275,9 +280,18 @@ const RessourceUser = () => {
                             />
                           </button>
                         </div>
-                        <p className={`${mc.title}`}>{ressource.title}</p>
+                        <h3 className={`${mc.title}`}>{ressource.title}</h3>
                         <p className={`${mc.url}`}>
-                          <a href={ressource.url}>{ressource.url}</a>
+                          <a
+                            href={
+                              ressource.url.startsWith("https://")
+                                ? ressource.url
+                                : `https://${ressource.url}`
+                            }
+                            target={"_blank"}
+                          >
+                            {ressource.url}
+                          </a>
                         </p>
                         <p className={`${mc.description}`}>
                           Description :{ressource.description}
@@ -288,15 +302,14 @@ const RessourceUser = () => {
                             handleShare(ressource.id);
                           }}
                         >
-                          Partage
+                          {ressource.shareRessource ? "Non Partage" : "Partage"}
                         </button>
-                        <p>{ressource.shareRessource ? "true" : "false"}</p>
                       </article>
                     );
                   }
                 })}
               </div>
-            </>
+            </div>
           ))
         )}
       </section>

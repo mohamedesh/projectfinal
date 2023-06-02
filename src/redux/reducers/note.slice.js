@@ -18,7 +18,6 @@ export const postNote = createAsyncThunk(
       form,
       token
     );
-    console.log(data);
     return error
       ? rejectWithValue(`Cannot post Note - Error Status ${status} - ${error}`)
       : fulfillWithValue(data);
@@ -34,7 +33,6 @@ export const getNotes = createAsyncThunk(
       `note/displayNotes/${userId}`,
       token
     );
-    console.log(data.note);
     return error
       ? rejectWithValue(
           `Cannot display Note - Error Status ${status} - ${error}`
@@ -52,7 +50,6 @@ export const deleteNote = createAsyncThunk(
       `note/deleteNote/${noteId}`,
       token
     );
-    console.log(data.note);
     return error
       ? rejectWithValue(
           `Cannot delete note - Error Status ${status} - ${error}`
@@ -72,7 +69,6 @@ export const updateNote = createAsyncThunk(
       { title, description, contain },
       token
     );
-    console.log(data);
     return error
       ? rejectWithValue(
           `Cannot update Note - Error Status ${status} - ${error}`
@@ -104,11 +100,8 @@ export const noteSlice = createSlice({
       // fulfilled = data rep du serveur
       .addCase(postNote.fulfilled, (state, action) => {
         // action = propriété de fulfillWithValue
-        console.log(action.payload);
-        //
         return {
           ...state,
-
           loading: false,
           notes: [...state.notes, action.payload.note],
           title: "",
@@ -116,8 +109,32 @@ export const noteSlice = createSlice({
           contain: "",
         };
       })
+      .addCase(postNote.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(postNote.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+        };
+      })
       .addCase(getNotes.fulfilled, (state, action) => {
         return { ...state, loading: false, notes: [...action.payload] };
+      })
+      .addCase(getNotes.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(getNotes.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+        };
       })
       .addCase(deleteNote.fulfilled, (state, action) => {
         return {
@@ -131,8 +148,19 @@ export const noteSlice = createSlice({
           ]),
         };
       })
+      .addCase(deleteNote.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(deleteNote.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+        };
+      })
       .addCase(updateNote.fulfilled, (state, action) => {
-        console.log(action.payload);
         return {
           ...state,
           notes: sortArrayById([
@@ -141,6 +169,18 @@ export const noteSlice = createSlice({
               (elt) => elt.id !== parseInt(action.payload.id)
             ),
           ]),
+        };
+      })
+      .addCase(updateNote.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(updateNote.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
         };
       });
   },

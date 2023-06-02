@@ -7,16 +7,15 @@ import {
 } from "../../redux/reducers/note.slice";
 import { newState } from "../../redux/reducers/note.slice";
 import { useEffect, useState } from "react";
-import mc from "../Note/CreateNote.module.scss";
+import mc from "./note.module.scss";
 
-const CreateNote = () => {
+const Note = () => {
   const dispatch = useDispatch();
   // ramene les states
   const { title, description, contain, notes } = useSelector(
     (store) => store.note
   );
   const { users } = useSelector((store) => store.persistedReducer);
-  console.log(notes);
   // comment le state va devoir etre
   const handleChangeField = (key, value) => {
     dispatch(newState({ key, value }));
@@ -55,7 +54,6 @@ const CreateNote = () => {
     });
     setShowModalModified(!showModalModified);
   };
-  console.log(editNote);
   const handleUpdate = (e) => {
     e.preventDefault();
     dispatch(updateNote(editNote));
@@ -64,8 +62,8 @@ const CreateNote = () => {
 
   return (
     <div className={`${mc.noteContainer}`}>
-      <button className={`submit ${mc.submit}`} onClick={toggleModal}>
-        Crée Nouvelle Note
+      <button className={` ${mc.submit}`} onClick={toggleModal}>
+        +
       </button>
 
       {showModalModified && (
@@ -194,4 +192,4 @@ const CreateNote = () => {
   );
 };
 
-export default CreateNote;
+export default Note;

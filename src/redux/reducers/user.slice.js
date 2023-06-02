@@ -45,19 +45,6 @@ export const getUser = createAsyncThunk(
       : fulfillWithValue(data);
   }
 );
-export const getUserOne = createAsyncThunk(
-  "users/display",
-  async (_, thunkApi) => {
-    const { fulfillWithValue, rejectWithValue } = thunkApi;
-    const token = getItem("token");
-    const { status, data, error } = await getRequest(`users/displayOne`, token);
-    console.log({ Ressources: data.user.Ressources, Notes: data.user.Notes });
-
-    return error
-      ? rejectWithValue(`Cannot get User - Error Status ${status} - ${error}`)
-      : fulfillWithValue(data.user);
-  }
-);
 
 export const deleteUser = createAsyncThunk(
   "users/delete",
@@ -123,10 +110,6 @@ export const usersSlice = createSlice({
     echapValues: (state, action) => {
       return { ...state, ...body };
     },
-    newSurname: (state, action) => {
-      console.log(action);
-      return { ...state, surname: action.payload };
-    },
     userLogout: (state, action) => {
       return { ...state, isLogged: false };
     },
@@ -142,32 +125,67 @@ export const usersSlice = createSlice({
           isLogged: true,
         };
       })
+      .addCase(postUser.pending, (state, action) => {
+        return { ...state, loading: true };
+      })
+      .addCase(postUser.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          users: action.payload.response,
+          isLogged: false,
+        };
+      })
       .addCase(userSignIn.fulfilled, (state, action) => {
-        // 3 eme parametre permet de
         console.log(action.payload.user);
         return {
           ...state,
           loading: false,
-          // email: "",
-          // password: "",
           users: action.payload.user,
           isLogged: true,
         };
-        //faire panding et rejected
       })
-      // .addCase(getUser.fulfilled,(state,action)=>{
-      //     console.log(action.payload)
-      //     return {...state, loading:false, userGet: [...action.payload]}
-      // })
+      .addCase(userSignIn.pending, (state, action) => {
+        return { ...state, loading: true };
+      })
+      .addCase(userSignIn.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          users: action.payload.response,
+          isLogged: false,
+        };
+      })
       .addCase(deleteUser.fulfilled, (state, action) => {
         return { ...state, loading: false };
       })
+      .addCase(deleteUser.pending, (state, action) => {
+        return { ...state, loading: true };
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          users: action.payload.response,
+          isLogged: false,
+        };
+      })
       .addCase(updateUser.fulfilled, (state, action) => {
         return { ...state, loading: false };
+      })
+      .addCase(updateUser.pending, (state, action) => {
+        return { ...state, loading: true };
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          users: action.payload.response,
+          isLogged: false,
+        };
       });
   },
 });
 
-export const { newState, test, echapValues, newSurname, userLogout } =
-  usersSlice.actions;
+export const { newState, echapValues, userLogout } = usersSlice.actions;
 export default usersSlice.reducer;

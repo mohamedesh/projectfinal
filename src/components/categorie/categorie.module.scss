@@ -1,0 +1,41 @@
+.cardContainer{
+  & .card{
+    border:1px solid #0C6291;
+    border-radius: 1.6rem;
+    text-align: center;
+    margin:2rem;
+    position: relative;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    & p {
+      padding:1rem;
+      text-align: start;
+    }
+    & .title{
+      text-align: center;
+      font-weight: bold;
+    }
+    & .url{
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .cardContainer{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .card {
+      width: 45%;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .cardContainer{
+    .card {
+      width: 23%;
+    }
+  }
+}

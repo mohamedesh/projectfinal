@@ -10,7 +10,7 @@ import {
   sortArrayById,
   sortArrayByCategorieId,
 } from "../../utilitaire/sort.utilitaire";
-import categorie from "../../components/Categorie/Categorie";
+import categorie from "../../components/categorie/Categorie";
 
 export const postRessource = createAsyncThunk(
   "ressource/create",
@@ -22,7 +22,6 @@ export const postRessource = createAsyncThunk(
       form,
       token
     );
-    console.log(data);
 
     return error
       ? rejectWithValue(
@@ -41,7 +40,6 @@ export const getRessourceByUserId = createAsyncThunk(
       `ressource/displayAll/${userId}`,
       token
     );
-    console.log(data);
     return error
       ? rejectWithValue(
           `Cannot display Ressource - Error Status ${status} - ${error}`
@@ -59,7 +57,6 @@ export const getDiscoveryRessources = createAsyncThunk(
       `ressource/displayDiscovery`,
       token
     );
-    console.log(data);
     return error
       ? rejectWithValue(
           `Cannot display Ressource in discovery - Error Status ${status} - ${error}`
@@ -77,7 +74,6 @@ export const deleteRessource = createAsyncThunk(
       `ressource/delete/${RessourceId}`,
       token
     );
-    console.log(data);
     return error
       ? rejectWithValue(
           `Cannot delete Ressource - Error Status ${status} - ${error}`
@@ -90,15 +86,14 @@ export const updateRessource = createAsyncThunk(
   "ressource/update",
   async (ressource, thunkApi) => {
     const { fulfillWithValue, rejectWithValue } = thunkApi;
-    const { title, url, description, id, shareRessource } = ressource;
-    console.log(id);
+    const { title, url, description, id, shareRessource, categorieId } =
+      ressource;
     const token = getItem("token");
     const { status, data, error } = await updateRequest(
       `ressource/update/${id}`,
-      { title, url, description, shareRessource },
+      { title, url, description, shareRessource, categorieId },
       token
     );
-    console.log(data);
     return error
       ? rejectWithValue(
           `Cannot update Ressource - Error Status ${status} - ${error}`
@@ -107,28 +102,6 @@ export const updateRessource = createAsyncThunk(
   }
 );
 
-// export const getCategorieWithRessource = createAsyncThunk(
-//   "categorie/displayWithRessource",
-//   async (userId, thunkApi) => {
-//     const{ fulfillWithValue, rejectWithValue } = thunkApi;
-//     const token = getItem("token");
-//     const{ status, data, error } = await getRequest(
-//       `categorie/displayWithRessource/${userId}`,
-//       token
-//     );
-//     return error
-//       ? rejectWithValue(
-//           `Cannot display Categorie - Error Status ${status} - ${error}`
-//         )
-//       : fulfillWithValue(data);
-//   }
-// );
-
-const bodyRessource = {
-  title: "",
-  url: "",
-  description: "",
-};
 export const ressourceSlice = createSlice({
   name: "ressources",
   initialState: {
@@ -147,7 +120,6 @@ export const ressourceSlice = createSlice({
       return { ...state, [action.payload.key]: action.payload.value };
     },
     addRessource: (state, action) => {
-      console.log(action);
       return { ...state, ressources: [...action.payload] };
     },
     categoryChange: (state, action) => {
@@ -160,9 +132,6 @@ export const ressourceSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(postRessource.fulfilled, (state, action) => {
-        // contient mon nouveau post
-        console.log(action.payload);
-        // recup les anciennes données et rajoute les nouvelles
         return {
           ...state,
           loading: false,
@@ -172,6 +141,18 @@ export const ressourceSlice = createSlice({
           ],
         };
       })
+      .addCase(postRessource.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(postRessource.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+        };
+      })
       .addCase(getRessourceByUserId.fulfilled, (state, action) => {
         return {
           ...state,
@@ -179,8 +160,19 @@ export const ressourceSlice = createSlice({
           ressourcesByUserId: action.payload,
         };
       })
+      .addCase(getRessourceByUserId.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(getRessourceByUserId.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+        };
+      })
       .addCase(deleteRessource.fulfilled, (state, action) => {
-        console.log(action.payload);
         return {
           ...state,
           loading: false,
@@ -191,8 +183,19 @@ export const ressourceSlice = createSlice({
           ],
         };
       })
+      .addCase(deleteRessource.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(deleteRessource.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+        };
+      })
       .addCase(updateRessource.fulfilled, (state, action) => {
-        console.log(action.payload);
         return {
           ...state,
           loading: false,
@@ -204,21 +207,38 @@ export const ressourceSlice = createSlice({
           ]),
         };
       })
+      .addCase(updateRessource.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(updateRessource.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+        };
+      })
+
       .addCase(getDiscoveryRessources.fulfilled, (state, action) => {
-        console.log(action.payload);
         return {
           ...state,
           loading: false,
           shareRessources: action.payload.ressource,
         };
+      })
+      .addCase(getDiscoveryRessources.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(getDiscoveryRessources.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+        };
       });
-    // .addCase(getCategorieWithRessource.fulfilled, (state, action) => {
-    //   console.log(action.payload);
-    //   return {
-    //     ...state,
-    //     categoriesRessourcesByUser: action.payload.categorie,
-    //   };
-    // });
   },
 });
 
