@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import mc from "./signUp.module.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { postUser } from "../../redux/reducers/user.slice";
-import { newState } from "../../redux/reducers/user.slice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -54,6 +53,7 @@ const SignUp = () => {
         email: email,
       })
     );
+    navigate("/dashboard");
   };
 
   return (

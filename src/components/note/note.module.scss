@@ -3,14 +3,13 @@
     all:unset;
     margin:2rem;
     padding:2rem;
-    border:1px solid #0C6291;
-    //background-color: #0C6291;
-    color :  #0C6291;
+    border:1px solid var(--blue-color);
+    color :  var(--blue-color);
     border-radius: 50%;
   }
   & .note{
     & .card{
-      border: 1px solid #0C6291;
+      border: 2px solid var(--blue-color);
       border-radius:1.6rem;
       margin:2rem;
       position: relative;
@@ -19,7 +18,6 @@
         padding-left:1rem;
         padding-bottom:2rem;
       }
-
     }
   }
   & .form{

@@ -103,8 +103,6 @@ export const usersSlice = createSlice({
     // setter
     newState: (state, action) => {
       // action contenu dans le payload
-      console.log(state);
-      console.log(action);
       return { ...state, [action.payload.key]: action.payload.value };
     },
     echapValues: (state, action) => {

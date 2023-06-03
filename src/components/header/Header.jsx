@@ -42,68 +42,75 @@ const Header = () => {
         <label htmlFor={`${mc.burgertoggle}`} className={`${mc.burger}`}>
           <span className={`${mc.bar} `}></span>
         </label>
+        <div className={`${mc.navlist} `}>
+          <ul>
+            <li>
+              <NavLink to={"/"}>Accueil</NavLink>
+            </li>
+            <li>
+              <NavLink to={"/about"}>A propos </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/dashboard"}>Tableau de bord</NavLink>
+            </li>
+            <li>
+              <NavLink to={"/discovery"}>Découvrir</NavLink>
+            </li>
+          </ul>
+          {isLogged ? (
+            <div className={`${mc.connect}`}>
+              <div className={`${mc.nameUser}`}>
+                <p>{users.surname}</p>
+                <p>{users.name}</p>
+              </div>
+              <button className={mc.logout} onClick={logout}>
+                Deconnexion
+              </button>
+            </div>
+          ) : (
+            <div className={mc.connect}>
+              <div>
+                <button
+                  className={` ${mc.btnConnexion}`}
+                  onClick={handleButtonSignIn}
+                >
+                  Connexion
+                </button>
 
-        <ul
-          className={`flex jc-evenly direction-column ai-center ${mc.navlist} `}
-        >
-          <li>
-            <NavLink to={"/"}>Accueil</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/about"}>A propos </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/dashboard"}>Tableau de bord</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/discovery"}>Découvrir</NavLink>
-          </li>
-        </ul>
+                {showSignIn && (
+                  <div className={`overlay`}>
+                    <div className={`modal`}>
+                      <div className={`buttonCard flex jc-end`}>
+                        <button onClick={handleButtonSignIn}>X</button>
+                      </div>
+                      <SignIn />
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div>
+                <button
+                  className={` ${mc.btnDeconnexion}`}
+                  onClick={handleButtonSignUp}
+                >
+                  Inscription
+                </button>
+
+                {showSignUp && (
+                  <div className={`overlay`}>
+                    <div className={`modal`}>
+                      <div className={`buttonCard flex jc-end`}>
+                        <button onClick={handleButtonSignUp}>X</button>
+                      </div>
+                      <SignUp />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </nav>
-      {isLogged ? (
-        <div className={`${mc.connect} ${mc.nameUser}`}>
-          <p>{users.surname}</p>
-          <p>{users.name}</p>
-          <button className={mc.logout} onClick={logout}>
-            Deconnexion
-          </button>
-        </div>
-      ) : (
-        <div className={mc.connect}>
-          <div>
-            <button className={`submit`} onClick={handleButtonSignIn}>
-              Connexion
-            </button>
-
-            {showSignIn && (
-              <div className={`overlay`}>
-                <div className={`modal`}>
-                  <div className={`buttonCard flex jc-end`}>
-                    <button onClick={handleButtonSignIn}>X</button>
-                  </div>
-                  <SignIn />
-                </div>
-              </div>
-            )}
-          </div>
-          <div>
-            <button className={`submit`} onClick={handleButtonSignUp}>
-              Inscription
-            </button>
-
-            {showSignUp && (
-              <div className={`overlay`}>
-                <div className={`modal`}>
-                  <div className={`buttonCard flex jc-end`}>
-                    <button onClick={handleButtonSignUp}>X</button>
-                  </div>
-                  <SignUp />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </header>
   );
 };

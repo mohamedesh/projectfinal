@@ -28,7 +28,7 @@ const Note = () => {
 
   useEffect(() => {
     dispatch(getNotes(users.id));
-  }, []);
+  }, [users.id]);
 
   const deleteNoteId = (id) => {
     dispatch(deleteNote(id));

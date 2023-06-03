@@ -39,6 +39,7 @@ export const getRessourceByCategorieId = createAsyncThunk(
 export const categorieSlice = createSlice({
   name: "categories",
   initialState: {
+    loading: false,
     categoriesRessource: [],
     selectedCategorie: {},
     ressourcesByCategorie: [],
@@ -52,18 +53,39 @@ export const categorieSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCategorie.fulfilled, (state, action) => {
-        return { ...state, categoriesRessource: action.payload.categorie };
+        return {
+          ...state,
+          loading: false,
+          categoriesRessource: action.payload.categorie,
+        };
       })
-
+      .addCase(getCategorie.pending, (state, action) => {
+        return { ...state, loading: true };
+      })
+      .addCase(getCategorie.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          ressourcesByCategorie: [action.payload],
+        };
+      })
       .addCase(getRessourceByCategorieId.fulfilled, (state, action) => {
-        return { ...state, ressourcesByCategorie: action.payload.ressource };
+        return {
+          ...state,
+          loading: false,
+          ressourcesByCategorie: action.payload.ressource,
+        };
+      })
+      .addCase(getRessourceByCategorieId.pending, (state, action) => {
+        return { ...state, loading: true };
+      })
+      .addCase(getRessourceByCategorieId.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          ressourcesByCategorie: [action.payload],
+        };
       });
-    // .addCase(getRessourceByCategorieId.pending, (state, action) => {
-    //   return { ...state, ressourcesByCategorie: [action.payload] };
-    // })
-    // .addCase(getRessourceByCategorieId.rejected, (state, action) => {
-    //   return { ...state, ressourcesByCategorie: [action.payload] };
-    // });
   },
 });
 

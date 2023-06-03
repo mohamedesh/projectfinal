@@ -114,14 +114,7 @@ export const ressourceSlice = createSlice({
     ressourcesByUserId: [],
     shareRessources: [],
   },
-  // ici c'est les actions,ce qui va etre le setter du state
   reducers: {
-    newState: (state, action) => {
-      return { ...state, [action.payload.key]: action.payload.value };
-    },
-    addRessource: (state, action) => {
-      return { ...state, ressources: [...action.payload] };
-    },
     categoryChange: (state, action) => {
       return {
         ...state,
@@ -242,6 +235,5 @@ export const ressourceSlice = createSlice({
   },
 });
 
-export const { newState, addRessource, categoryChange } =
-  ressourceSlice.actions;
+export const { categoryChange } = ressourceSlice.actions;
 export default ressourceSlice.reducer;

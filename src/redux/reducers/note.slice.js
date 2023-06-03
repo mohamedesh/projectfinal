@@ -90,10 +90,6 @@ export const noteSlice = createSlice({
     newState: (state, action) => {
       return { ...state, [action.payload.key]: action.payload.value };
     },
-    addNote: (state, action) => {
-      //setter qui permet d'avoir une copie du tableau
-      return { ...state, notes: [...action.payload] };
-    },
   },
   extraReducers: (builder) => {
     builder

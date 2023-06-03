@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteRessource,
-  newState,
   categoryChange,
   postRessource,
   updateRessource,
@@ -9,7 +8,6 @@ import {
 } from "../../redux/reducers/ressource.slice";
 import { useEffect, useState } from "react";
 import mc from "./ressource.module.scss";
-
 import { getCategorie } from "../../redux/reducers/categorie.slice";
 
 const RessourceUser = () => {
@@ -19,12 +17,13 @@ const RessourceUser = () => {
   const [shareRessource, setShareRessource] = useState(false);
 
   const dispatch = useDispatch();
-  const { title, url, description, ressourcesByUserId } = useSelector(
+  const { title, url, description, ressourcesByUserId, loading } = useSelector(
     (store) => store.ressource
   );
   const { users } = useSelector((store) => store.persistedReducer);
   const { categoriesRessource } = useSelector((store) => store.categories);
   console.log(categoriesRessource);
+  console.log(ressourcesByUserId);
 
   useEffect(() => {
     dispatch(getRessourceByUserId(users.id));
@@ -44,13 +43,13 @@ const RessourceUser = () => {
 
   const handleChange = async (e) => {
     e.preventDefault();
-    dispatch(postRessource(handleRessource));
+    await dispatch(postRessource(handleRessource));
     toggleModal();
   };
 
   const handleShare = async (id) => {
     setShareRessource(!shareRessource);
-    dispatch(
+    await dispatch(
       updateRessource({
         shareRessource,
         id: id,
@@ -244,7 +243,7 @@ const RessourceUser = () => {
       ) : null}
 
       <section className={`${mc.ressource} `}>
-        {categoriesRessource.length === 0 ? (
+        {ressourcesByUserId.length === 0 ? (
           <p>Tu n'as pas encore publier de ressources sur ta page !! </p>
         ) : (
           categoriesRessource.map((categorie) => (

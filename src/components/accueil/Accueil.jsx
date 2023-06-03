@@ -4,6 +4,7 @@ import Login from "../login/Login";
 import { useSelector } from "react-redux";
 const Accueil = () => {
   const { isLogged } = useSelector((store) => store.persistedReducer);
+
   return (
     <main className={`${mc.homepage} container `}>
       <h1>Good Corner : Le trésor numérique des liens qui vous inspirent </h1>
@@ -25,6 +26,7 @@ const Accueil = () => {
           </article>
         )}
       </section>
+      }
     </main>
   );
 };

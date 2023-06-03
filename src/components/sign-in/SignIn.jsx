@@ -26,6 +26,7 @@ const SignIn = () => {
   const handleChange = async (e) => {
     e.preventDefault();
     dispatch(userSignIn({ password: password, email: email }));
+    navigate("/dashboard");
   };
 
   return (

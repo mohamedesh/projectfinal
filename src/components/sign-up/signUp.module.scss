@@ -1,8 +1,8 @@
 form{
   & input{
     all: unset;
-    border-bottom: 1px solid #0C6291 ;
-    border-left: 1px solid #0C6291;
+    border-bottom: 1px solid var(--blue-color) ;
+    border-left: 1px solid var(--blue-color);
     padding: 2rem;
     margin:.5rem
   }
@@ -12,12 +12,12 @@ form{
     margin: 2rem auto;
       cursor: pointer;
       text-align: center;
-      border: 1px solid #0C6291;
+      border: 1px solid var(--blue-color);
       border-radius: 1rem;
       padding:1rem 2rem;
 
       &:hover{
-        background-color: #0C6291;
+        background-color: var(--blue-color);
         color: #ffffff;
       }
   }

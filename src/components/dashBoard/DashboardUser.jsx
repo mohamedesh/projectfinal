@@ -6,8 +6,6 @@ import { useState } from "react";
 import mc from "./dashboard.module.scss";
 
 const DashboardUser = () => {
-  // faire en sorte que le user puisse choisir entre rendre public ou prive son compte
-  // mettre les catégorie en place
   const [toggle, setToggle] = useState(true);
   return (
     <main className={`container`}>
