@@ -18,9 +18,15 @@ const RessourceUser = () => {
   const [shareRessource, setShareRessource] = useState(false);
 
   const dispatch = useDispatch();
-  const { title, url, description, ressourcesByUserId, loading } = useSelector(
-    (store) => store.ressource
-  );
+  const {
+    title,
+    url,
+    description,
+    ressourcesByUserId,
+    loading,
+    rejectedRessource,
+  } = useSelector((store) => store.ressource);
+  console.log(rejectedRessource);
   const { users } = useSelector((store) => store.persistedReducer);
   const { categoriesRessource } = useSelector((store) => store.categories);
 
@@ -46,15 +52,16 @@ const RessourceUser = () => {
     toggleModal();
   };
 
-  const handleShare = async (id) => {
+  const handleShare = (id) => {
     setShareRessource(!shareRessource);
-    await dispatch(
+    dispatch(
       updateRessource({
         shareRessource,
         id: id,
       })
     );
   };
+  console.log(shareRessource);
   // supprimer ressources
   const deleteRessourceId = (id) => {
     dispatch(deleteRessource(id));
@@ -93,9 +100,6 @@ const RessourceUser = () => {
     setShowModal(null);
     setVisible(false);
   };
-  console.log(handleRessource);
-  console.log(showModal);
-  console.log(visible);
 
   return (
     <section className={`${mc.ressourceUser}`}>
@@ -290,83 +294,94 @@ const RessourceUser = () => {
             </section>
           ) : null}
 
-          <section className={`${mc.ressource} `}>
-            {ressourcesByUserId.length === 0 ? (
-              <p>Tu n'as pas encore publier de ressources sur ta page !! </p>
-            ) : (
-              categoriesRessource.map((categorie) => (
-                <article key={categorie.id}>
-                  <h2>{categorie.name}</h2>
-                  <section className={`${mc.categorieRessource}`}>
-                    {ressourcesByUserId.map((ressource) => {
-                      if (categorie.id === ressource.categorieId) {
-                        return (
-                          <article className={`${mc.card} `} key={ressource.id}>
-                            <div className={`buttonCard flex ai-center jc-end`}>
-                              <button
-                                aria-label={"supprimer une ressource"}
-                                onClick={() => {
-                                  deleteRessourceId(ressource.id);
-                                }}
-                              >
-                                X
-                              </button>
-                              <button
-                                aria-label={"modifier une ressource"}
-                                onClick={() => {
-                                  handleModificated(
-                                    ressource.id,
-                                    ressource.title,
-                                    ressource.url,
-                                    ressource.description,
-                                    ressource.categorieId
-                                  );
-                                }}
-                              >
-                                <img
-                                  src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
-                                  alt="settings"
-                                />
-                              </button>
-                            </div>
-                            <h3 className={`${mc.title}`}>{ressource.title}</h3>
-                            <p className={`${mc.url}`}>
-                              <a
-                                href={
-                                  ressource.url.startsWith("https://")
-                                    ? ressource.url
-                                    : `https://${ressource.url}`
-                                }
-                                target={"_blank"}
-                              >
-                                {ressource.url}
-                              </a>
-                            </p>
-                            <p className={`${mc.description}`}>
-                              Description :{ressource.description}
-                            </p>
-                            <button
-                              aria-label={
-                                "partager une ressource dans la page découvrir"
-                              }
-                              className={`submit `}
-                              onClick={() => {
-                                handleShare(ressource.id);
-                              }}
+          {!!rejectedRessource ? (
+            <div className={`${mc.rejected}`}>{rejectedRessource}</div>
+          ) : (
+            <section className={`${mc.ressource} `}>
+              {ressourcesByUserId.length === 0 ? (
+                <p>Tu n'as pas encore publier de ressources sur ta page !! </p>
+              ) : (
+                categoriesRessource.map((categorie) => (
+                  <article key={categorie.id}>
+                    <h2>{categorie.name}</h2>
+                    <section className={`${mc.categorieRessource}`}>
+                      {ressourcesByUserId.map((ressource) => {
+                        if (categorie.id === ressource.categorieId) {
+                          return (
+                            <article
+                              className={`${mc.card} `}
+                              key={ressource.id}
                             >
-                              {ressource.shareRessource
-                                ? "Non Partage"
-                                : "Partage"}
-                            </button>
-                          </article>
-                        );
-                      }
-                    })}
-                  </section>
-                </article>
-              ))
-            )}
-          </section>
+                              <div
+                                className={`buttonCard flex ai-center jc-end`}
+                              >
+                                <button
+                                  aria-label={"supprimer une ressource"}
+                                  onClick={() => {
+                                    deleteRessourceId(ressource.id);
+                                  }}
+                                >
+                                  X
+                                </button>
+                                <button
+                                  aria-label={"modifier une ressource"}
+                                  onClick={() => {
+                                    handleModificated(
+                                      ressource.id,
+                                      ressource.title,
+                                      ressource.url,
+                                      ressource.description,
+                                      ressource.categorieId
+                                    );
+                                  }}
+                                >
+                                  <img
+                                    src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
+                                    alt="settings"
+                                  />
+                                </button>
+                              </div>
+                              <h3 className={`${mc.title}`}>
+                                {ressource.title}
+                              </h3>
+                              <p className={`${mc.url}`}>
+                                <a
+                                  href={
+                                    ressource.url.startsWith("https://")
+                                      ? ressource.url
+                                      : `https://${ressource.url}`
+                                  }
+                                  target={"_blank"}
+                                >
+                                  {ressource.url}
+                                </a>
+                              </p>
+                              <p className={`${mc.description}`}>
+                                Description :{ressource.description}
+                              </p>
+                              <button
+                                aria-label={
+                                  "partager une ressource dans la page découvrir"
+                                }
+                                className={`submit `}
+                                onClick={() => {
+                                  handleShare(ressource.id);
+                                }}
+                              >
+                                {ressource.shareRessource
+                                  ? "Non Partage"
+                                  : "Partage"}
+                              </button>
+                            </article>
+                          );
+                        }
+                      })}
+                    </section>
+                  </article>
+                ))
+              )}
+            </section>
+          )}
         </>
       )}
     </section>

@@ -85,6 +85,7 @@ export const noteSlice = createSlice({
     contain: "",
     loading: false,
     notes: [],
+    rejectedNote: "",
   },
   reducers: {
     newState: (state, action) => {
@@ -130,6 +131,7 @@ export const noteSlice = createSlice({
         return {
           ...state,
           loading: false,
+          rejectedNote: action.payload,
         };
       })
       .addCase(deleteNote.fulfilled, (state, action) => {

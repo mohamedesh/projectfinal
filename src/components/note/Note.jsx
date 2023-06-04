@@ -13,9 +13,8 @@ import Loader from "../loader/Loader";
 const Note = () => {
   const dispatch = useDispatch();
   // ramene les states
-  const { title, description, contain, notes, loading } = useSelector(
-    (store) => store.note
-  );
+  const { title, description, contain, notes, loading, rejectedNote } =
+    useSelector((store) => store.note);
   const { users } = useSelector((store) => store.persistedReducer);
   // comment le state va devoir etre
   const handleChangeField = (key, value) => {
@@ -196,47 +195,51 @@ const Note = () => {
               </div>
             </section>
           )}
-          <section className={`${mc.note}`}>
-            <div className={`${mc.blockNote}`}>
-              {notes.length === 0 ? (
-                <p>Pas de note publier pour le moment</p>
-              ) : (
-                notes.map((note) => (
-                  <article className={`${mc.card}`} key={note.id}>
-                    <div className={`buttonCard flex ai-center jc-end`}>
-                      <button
-                        aria-label={"supprimer une note"}
-                        onClick={() => deleteNoteId(note.id)}
-                      >
-                        X
-                      </button>
-                      <button
-                        aria-label={"modifier une ressource"}
-                        onClick={() =>
-                          handleModificated(
-                            note.id,
-                            note.title,
-                            note.description,
-                            note.contain
-                          )
-                        }
-                      >
-                        <img
-                          src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
-                          alt="settings"
-                        />
-                      </button>
-                    </div>
-                    <p className={`${mc.title}`}>{note.title}</p>
-                    <p className={`${mc.description}`}>
-                      Description : {note.description}
-                    </p>
-                    <p className={`${mc.contain}`}>{note.contain}</p>
-                  </article>
-                ))
-              )}
-            </div>
-          </section>
+          {!!rejectedNote ? (
+            <div className={`${mc.rejected}`}>{rejectedNote}</div>
+          ) : (
+            <section className={`${mc.note}`}>
+              <div className={`${mc.blockNote}`}>
+                {notes.length === 0 ? (
+                  <p>Pas de note publier pour le moment</p>
+                ) : (
+                  notes.map((note) => (
+                    <article className={`${mc.card}`} key={note.id}>
+                      <div className={`buttonCard flex ai-center jc-end`}>
+                        <button
+                          aria-label={"supprimer une note"}
+                          onClick={() => deleteNoteId(note.id)}
+                        >
+                          X
+                        </button>
+                        <button
+                          aria-label={"modifier une ressource"}
+                          onClick={() =>
+                            handleModificated(
+                              note.id,
+                              note.title,
+                              note.description,
+                              note.contain
+                            )
+                          }
+                        >
+                          <img
+                            src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
+                            alt="settings"
+                          />
+                        </button>
+                      </div>
+                      <p className={`${mc.title}`}>{note.title}</p>
+                      <p className={`${mc.description}`}>
+                        Description : {note.description}
+                      </p>
+                      <p className={`${mc.contain}`}>{note.contain}</p>
+                    </article>
+                  ))
+                )}
+              </div>
+            </section>
+          )}
         </>
       )}
     </section>

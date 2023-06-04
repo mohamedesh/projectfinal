@@ -109,6 +109,7 @@ export const ressourceSlice = createSlice({
     title: "",
     url: "",
     description: "",
+    rejectedRessource: "",
     loading: false,
     ressources: [],
     ressourcesByUserId: [],
@@ -160,9 +161,11 @@ export const ressourceSlice = createSlice({
         };
       })
       .addCase(getRessourceByUserId.rejected, (state, action) => {
+        console.log(action.payload);
         return {
           ...state,
           loading: false,
+          rejectedRessource: action.payload,
         };
       })
       .addCase(deleteRessource.fulfilled, (state, action) => {
@@ -189,6 +192,7 @@ export const ressourceSlice = createSlice({
         };
       })
       .addCase(updateRessource.fulfilled, (state, action) => {
+        console.log(action.payload);
         return {
           ...state,
           loading: false,

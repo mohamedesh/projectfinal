@@ -58,32 +58,47 @@ const SignUp = () => {
 
   return (
     <form className={`flex direction-column `} onSubmit={handleForm}>
+      <label htmlFor="nom de famille">Nom de famille :</label>
       <input
         type="text"
+        id="nom de famille"
+        name="nom de famille"
         value={surname}
         onChange={(e) => handleChangeSurname(e)}
         placeholder="nom"
       />
+      <label htmlFor="prenom">Prénom :</label>
       <input
         type="text"
+        id="prenom"
+        name="prenom"
         value={name}
         onChange={(e) => handleChangeName(e)}
         placeholder="prenom"
       />
+      <label htmlFor="pseudo">Pseudo :</label>
       <input
         type="text"
+        id="pseudo"
+        name="pseudo"
         value={pseudo}
         onChange={(e) => handleChangePseudo(e)}
         placeholder="pseudo"
       />
+      <label htmlFor="email">Email :</label>
       <input
         type="email"
+        id="email"
+        name="email"
         value={email}
         onChange={(e) => handleChangeEmail(e)}
         placeholder="email"
       />
+      <label htmlFor="mot de passe">Mot de passe :</label>
       <input
         type="password"
+        id="mot de passe"
+        name="mot de passe"
         value={password}
         onChange={(e) => handleChangePassword(e)}
         placeholder="mot de passe"

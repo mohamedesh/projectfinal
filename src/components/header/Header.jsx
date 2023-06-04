@@ -9,10 +9,10 @@ import { userLogout } from "../../redux/reducers/user.slice";
 
 const Header = () => {
   const navigate = useNavigate();
-  const logout = () => {
+  const logout = async () => {
     removeItem("token");
     navigate("/");
-    dispatch(userLogout());
+    await dispatch(userLogout());
     setShowSignIn(false);
     setShowSignUp(false);
   };

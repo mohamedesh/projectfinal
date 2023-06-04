@@ -31,15 +31,21 @@ const SignIn = () => {
 
   return (
     <form className={`flex direction-column`} onSubmit={handleChange}>
+      <label htmlFor="email">Email : </label>
       <input
         type="email"
+        id="email"
+        name="email"
         value={email}
         required={true}
         onChange={(e) => handleChangeEmail(e)}
         placeholder="azerty@gmail.com"
       />
+      <label htmlFor="mot de passe">Mot de passe : </label>
       <input
         type="password"
+        id="mot de passe"
+        name="mot de passe"
         value={password}
         required={true}
         onChange={(e) => handleChangePassword(e)}

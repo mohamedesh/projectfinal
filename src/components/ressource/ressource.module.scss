@@ -1,4 +1,9 @@
 .ressourceUser{
+  & .rejected{
+    text-align: center;
+    font-weight: 100;
+    font-size: 10rem;
+  }
   & .submit{
     all:unset;
     margin:1rem;
