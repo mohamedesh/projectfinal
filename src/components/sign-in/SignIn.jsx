@@ -25,7 +25,7 @@ const SignIn = () => {
 
   const handleChange = async (e) => {
     e.preventDefault();
-    dispatch(userSignIn({ password: password, email: email }));
+    await dispatch(userSignIn({ password: password, email: email }));
     navigate("/dashboard");
   };
 
@@ -45,7 +45,11 @@ const SignIn = () => {
         onChange={(e) => handleChangePassword(e)}
         placeholder="mot de passe"
       />
-      <input className={`submit`} type="submit" />
+      <input
+        aria-label={"envoyer le formulaire de connection"}
+        className={`submit`}
+        type="submit"
+      />
     </form>
   );
 };

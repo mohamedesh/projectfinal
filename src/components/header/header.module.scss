@@ -29,6 +29,9 @@ header{
      transition: transform .3s;
       z-index: 1;
       font-size: 4rem;
+      &.open{
+        transform: none;
+      }
       & li {
         margin: 7rem 0;
         padding-left: 0;
@@ -67,7 +70,6 @@ header{
         }
       }
     }
-
      & .burger{
        display: block;
        cursor: pointer;
@@ -100,28 +102,25 @@ header{
        }
      }
 
-      /*the most important for menu burger* : permet de ramener le menu qui etait en translate en annualnt tout les effets sur lui*/
-     & #burgertoggle:checked~.navlist {
-       transform: none;
-     }
+     // /*the most important for menu burger* : permet de ramener le menu qui etait en translate en annualnt tout les effets sur lui*/
+     //& #burgertoggle:checked~.navlist {
+     //  transform: none;
+     //}
+     //
+     ///*rend la bar transparente pour pouvoir faire la croix */
+     //& #burgertoggle:checked~.burger .bar {
+     //  background-color: transparent;
+     //}
+     //
+     ///*faire la croix dés le clique sur le menu*/
+     //& #burgertoggle:checked~.burger .bar::before {
+     //  transform: rotate(-45deg);
+     //}
+     //
+     //& #burgertoggle:checked~.burger .bar::after {
+     //  transform: rotate(45deg);
+     //}
 
-     /*rend la bar transparente pour pouvoir faire la croix */
-     & #burgertoggle:checked~.burger .bar {
-       background-color: transparent;
-     }
-
-     /*faire la croix dés le clique sur le menu*/
-     & #burgertoggle:checked~.burger .bar::before {
-       transform: rotate(-45deg);
-     }
-
-     & #burgertoggle:checked~.burger .bar::after {
-       transform: rotate(45deg);
-     }
-
-     & #burgertoggle {
-       display: none;
-     }
    }
 }
 
@@ -183,13 +182,11 @@ header{
           }
           & .nameUser{
             display: flex;
-            & p{
               font-weight: bold;
               text-transform: capitalize;
               padding:.5rem;
               color: var(--blue-color);
               margin:0rem 1rem;
-            }
           }
         }
       }

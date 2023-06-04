@@ -21,12 +21,16 @@ const Header = () => {
   const { isLogged, users } = useSelector((store) => store.persistedReducer);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
-
+  const [isNavBarOpen, setIsNavBarOpen] = useState(false);
+  console.log(isNavBarOpen);
   const handleButtonSignIn = () => {
     setShowSignIn(!showSignIn);
   };
   const handleButtonSignUp = () => {
     setShowSignUp(!showSignUp);
+  };
+  const handleNavLinkClick = () => {
+    setIsNavBarOpen(false);
   };
 
   return (
@@ -38,37 +42,45 @@ const Header = () => {
         </div>
       </NavLink>
       <nav>
-        <input type="checkbox" id={`${mc.burgertoggle}`} />
-        <label htmlFor={`${mc.burgertoggle}`} className={`${mc.burger}`}>
+        <div
+          className={`${mc.burger}`}
+          onClick={() => setIsNavBarOpen(!isNavBarOpen)}
+        >
           <span className={`${mc.bar} `}></span>
-        </label>
-        <div className={`${mc.navlist} `}>
+        </div>
+
+        <div className={`${mc.navlist} ${isNavBarOpen ? mc.open : ""} `}>
           <ul>
             <li>
-              <NavLink to={"/"}>Accueil</NavLink>
+              <NavLink to={"/"} onClick={handleNavLinkClick}>
+                Accueil
+              </NavLink>
             </li>
             <li>
-              <NavLink to={"/about"}>A propos </NavLink>
+              <NavLink to={"/about"} onClick={handleNavLinkClick}>
+                A propos{" "}
+              </NavLink>
             </li>
             <li>
-              <NavLink to={"/dashboard"}>Tableau de bord</NavLink>
+              <NavLink to={"/dashboard"} onClick={handleNavLinkClick}>
+                Tableau de bord
+              </NavLink>
             </li>
             <li>
-              <NavLink to={"/discovery"}>Découvrir</NavLink>
+              <NavLink to={"/discovery"} onClick={handleNavLinkClick}>
+                Découvrir
+              </NavLink>
             </li>
           </ul>
           {isLogged ? (
-            <div className={`${mc.connect}`}>
-              <div className={`${mc.nameUser}`}>
-                <p>{users.surname}</p>
-                <p>{users.name}</p>
-              </div>
+            <section className={`${mc.connect}`}>
+              <p className={`${mc.nameUser}`}>{users.pseudo}</p>
               <button className={mc.logout} onClick={logout}>
                 Deconnexion
               </button>
-            </div>
+            </section>
           ) : (
-            <div className={mc.connect}>
+            <section className={mc.connect}>
               <div>
                 <button
                   className={` ${mc.btnConnexion}`}
@@ -107,7 +119,7 @@ const Header = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </section>
           )}
         </div>
       </nav>

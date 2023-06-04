@@ -88,7 +88,12 @@ const SignUp = () => {
         onChange={(e) => handleChangePassword(e)}
         placeholder="mot de passe"
       />
-      <input className={mc.submit} type="submit" value="Envoyez" />
+      <input
+        aria-label={"envoyer le formulaire d'inscription"}
+        className={mc.submit}
+        type="submit"
+        value="Envoyez"
+      />
     </form>
   );
 };

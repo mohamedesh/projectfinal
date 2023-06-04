@@ -9,9 +9,10 @@ import {
 import { useEffect, useState } from "react";
 import mc from "./ressource.module.scss";
 import { getCategorie } from "../../redux/reducers/categorie.slice";
+import Loader from "../loader/Loader";
 
 const RessourceUser = () => {
-  const [handleRessource, setHandleRessource] = useState({});
+  const [handleRessource, setHandleRessource] = useState(null);
   const [visible, setVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [shareRessource, setShareRessource] = useState(false);
@@ -22,8 +23,6 @@ const RessourceUser = () => {
   );
   const { users } = useSelector((store) => store.persistedReducer);
   const { categoriesRessource } = useSelector((store) => store.categories);
-  console.log(categoriesRessource);
-  console.log(ressourcesByUserId);
 
   useEffect(() => {
     dispatch(getRessourceByUserId(users.id));
@@ -92,227 +91,285 @@ const RessourceUser = () => {
     dispatch(updateRessource(handleRessource));
     setHandleRessource(null);
     setShowModal(null);
+    setVisible(false);
   };
+  console.log(handleRessource);
+  console.log(showModal);
+  console.log(visible);
 
   return (
-    <div className={`${mc.ressourceUser}`}>
-      <button className={` ${mc.submit}`} onClick={toggleModal}>
-        +
-      </button>
-      {showModal ? (
-        <section className={`${mc.form}`}>
-          {visible ? (
-            <div className={`overlay`}>
-              <div className={`modal`}>
-                <div className={`buttonCard flex jc-end `}>
-                  <button onClick={toggleModal}>X</button>
+    <section className={`${mc.ressourceUser}`}>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <button
+            className={` ${mc.submit}`}
+            aria-label={"acceder à un nouveau formulaire de ressource"}
+            onClick={toggleModal}
+          >
+            +
+          </button>
+          {showModal ? (
+            <section className={`${mc.form}`}>
+              {visible ? (
+                <div className={`overlay`}>
+                  <div className={`modal`}>
+                    <div className={`buttonCard flex jc-end `}>
+                      <button
+                        aria-label={
+                          "sortir du formulaire de modification de ressource"
+                        }
+                        onClick={toggleModal}
+                      >
+                        X
+                      </button>
+                    </div>
+                    <form
+                      onSubmit={handleUpdate}
+                      className={`flex direction-column  jc-end`}
+                    >
+                      <h2>Modification Ressource</h2>
+                      <label htmlFor="categorie">Catégorie : </label>
+                      <select
+                        className={`${mc.categorie}`}
+                        onChange={(e) => {
+                          handleCategoryChange(e);
+                        }}
+                        name="categorie"
+                        id="categorie"
+                      >
+                        <option value="">Sélectionnez une catégorie</option>
+                        {categoriesRessource.map((elt) => (
+                          <option key={elt.id} value={elt.id}>
+                            {elt.name}
+                          </option>
+                        ))}
+                      </select>
+                      <label htmlFor="titre">Titre : </label>
+                      <input
+                        type="text"
+                        id="titre"
+                        name="titre"
+                        placeholder="Titre"
+                        value={!!handleRessource ? handleRessource.title : ""}
+                        required={true}
+                        onChange={(e) =>
+                          setHandleRessource({
+                            ...handleRessource,
+                            title: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="lien">Lien :</label>
+                      <input
+                        type="text"
+                        id="lien"
+                        name="lien"
+                        placeholder="https://www.exemple.com"
+                        value={!!handleRessource ? handleRessource.url : ""}
+                        required={true}
+                        onChange={(e) =>
+                          setHandleRessource({
+                            ...handleRessource,
+                            url: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="description">Description :</label>
+                      <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        placeholder="description"
+                        value={
+                          !!handleRessource ? handleRessource.description : ""
+                        }
+                        required={true}
+                        onChange={(e) =>
+                          setHandleRessource({
+                            ...handleRessource,
+                            description: e.target.value,
+                          })
+                        }
+                      />
+                      <input className={`submit`} type="submit" />
+                    </form>
+                  </div>
                 </div>
-                <form
-                  onSubmit={handleUpdate}
-                  className={`flex direction-column  jc-end`}
-                >
-                  <h2>Modification Ressource</h2>
-                  <select
-                    className={`${mc.categorie}`}
-                    onChange={(e) => {
-                      handleCategoryChange(e);
-                    }}
-                    name=""
-                    id=""
-                  >
-                    <option value="">Sélectionnez une catégorie</option>
-                    {categoriesRessource.map((elt) => (
-                      <option key={elt.id} value={elt.id}>
-                        {elt.name}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="title"
-                    value={!!handleRessource ? handleRessource.title : ""}
-                    required={true}
-                    onChange={(e) =>
-                      setHandleRessource({
-                        ...handleRessource,
-                        title: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="url"
-                    value={!!handleRessource ? handleRessource.url : ""}
-                    required={true}
-                    onChange={(e) =>
-                      setHandleRessource({
-                        ...handleRessource,
-                        url: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="description"
-                    value={!!handleRessource ? handleRessource.description : ""}
-                    required={true}
-                    onChange={(e) =>
-                      setHandleRessource({
-                        ...handleRessource,
-                        description: e.target.value,
-                      })
-                    }
-                  />
-                  <input className={`submit`} type="submit" />
-                </form>
-              </div>
-            </div>
-          ) : (
-            <div className={`overlay`}>
-              <div className={`modal`}>
-                <div className={`buttonCard flex jc-end `}>
-                  <button onClick={toggleModal}>X</button>
+              ) : (
+                <div className={`overlay`}>
+                  <div className={`modal`}>
+                    <div className={`buttonCard flex jc-end `}>
+                      <button
+                        aria-label={
+                          "sortir du formulaire de création de ressource"
+                        }
+                        onClick={toggleModal}
+                      >
+                        X
+                      </button>
+                    </div>
+                    <form
+                      onSubmit={handleChange}
+                      className={`flex direction-column  jc-end`}
+                    >
+                      <h2>Nouvelle Ressource</h2>
+                      <label htmlFor="categorie">Catégorie : </label>
+                      <select
+                        className={`${mc.categorie}`}
+                        onChange={(e) => {
+                          handleCategoryChange(e);
+                        }}
+                        name="categorie"
+                        id="categorie"
+                      >
+                        <option value="">Sélectionnez une catégorie</option>
+                        {categoriesRessource.map((elt) => (
+                          <option key={elt.id} value={elt.id}>
+                            {elt.name}
+                          </option>
+                        ))}
+                      </select>
+                      <label htmlFor="titre">Titre : </label>
+                      <input
+                        type="text"
+                        id="titre"
+                        name="titre"
+                        placeholder="Titre"
+                        value={
+                          !!handleRessource.title ? handleRessource.title : ""
+                        }
+                        required={true}
+                        onChange={(e) =>
+                          setHandleRessource({
+                            ...handleRessource,
+                            title: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="lien">Lien :</label>
+                      <input
+                        type="text"
+                        id="lien"
+                        name="lien"
+                        placeholder="https://www.exemple.com"
+                        value={!!handleRessource.url ? handleRessource.url : ""}
+                        required={true}
+                        onChange={(e) =>
+                          setHandleRessource({
+                            ...handleRessource,
+                            url: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="description">Description : </label>
+                      <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        placeholder="description"
+                        value={
+                          !!handleRessource.description
+                            ? handleRessource.description
+                            : ""
+                        }
+                        required={true}
+                        onChange={(e) =>
+                          setHandleRessource({
+                            ...handleRessource,
+                            description: e.target.value,
+                          })
+                        }
+                      />
+                      <input className={`submit`} type="submit" />
+                    </form>
+                  </div>
                 </div>
-                <form
-                  onSubmit={handleChange}
-                  className={`flex direction-column  jc-end`}
-                >
-                  <h2>Nouvelle Ressource</h2>
+              )}
+            </section>
+          ) : null}
 
-                  <select
-                    className={`${mc.categorie}`}
-                    onChange={(e) => {
-                      handleCategoryChange(e);
-                    }}
-                    name=""
-                    id=""
-                  >
-                    <option value="">Sélectionnez une catégorie</option>
-                    {categoriesRessource.map((elt) => (
-                      <option key={elt.id} value={elt.id}>
-                        {elt.name}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="title"
-                    value={!!handleRessource.title ? handleRessource.title : ""}
-                    required={true}
-                    onChange={(e) =>
-                      setHandleRessource({
-                        ...handleRessource,
-                        title: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="url"
-                    value={!!handleRessource.url ? handleRessource.url : ""}
-                    required={true}
-                    onChange={(e) =>
-                      setHandleRessource({
-                        ...handleRessource,
-                        url: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="description"
-                    value={
-                      !!handleRessource.description
-                        ? handleRessource.description
-                        : ""
-                    }
-                    required={true}
-                    onChange={(e) =>
-                      setHandleRessource({
-                        ...handleRessource,
-                        description: e.target.value,
-                      })
-                    }
-                  />
-                  <input className={`submit`} type="submit" />
-                </form>
-              </div>
-            </div>
-          )}
-        </section>
-      ) : null}
-
-      <section className={`${mc.ressource} `}>
-        {ressourcesByUserId.length === 0 ? (
-          <p>Tu n'as pas encore publier de ressources sur ta page !! </p>
-        ) : (
-          categoriesRessource.map((categorie) => (
-            <div key={categorie.id}>
-              <h2>{categorie.name}</h2>
-              <div className={`${mc.categorieRessource}`}>
-                {ressourcesByUserId.map((ressource) => {
-                  if (categorie.id === ressource.categorieId) {
-                    return (
-                      <article className={`${mc.card} `} key={ressource.id}>
-                        <div className={`buttonCard flex ai-center jc-end`}>
-                          <button
-                            onClick={() => {
-                              deleteRessourceId(ressource.id);
-                            }}
-                          >
-                            X
-                          </button>
-                          <button
-                            onClick={() => {
-                              handleModificated(
-                                ressource.id,
-                                ressource.title,
-                                ressource.url,
-                                ressource.description,
-                                ressource.categorieId
-                              );
-                            }}
-                          >
-                            <img
-                              src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
-                              alt="settings"
-                            />
-                          </button>
-                        </div>
-                        <h3 className={`${mc.title}`}>{ressource.title}</h3>
-                        <p className={`${mc.url}`}>
-                          <a
-                            href={
-                              ressource.url.startsWith("https://")
-                                ? ressource.url
-                                : `https://${ressource.url}`
-                            }
-                            target={"_blank"}
-                          >
-                            {ressource.url}
-                          </a>
-                        </p>
-                        <p className={`${mc.description}`}>
-                          Description :{ressource.description}
-                        </p>
-                        <button
-                          className={`submit `}
-                          onClick={() => {
-                            handleShare(ressource.id);
-                          }}
-                        >
-                          {ressource.shareRessource ? "Non Partage" : "Partage"}
-                        </button>
-                      </article>
-                    );
-                  }
-                })}
-              </div>
-            </div>
-          ))
-        )}
-      </section>
-    </div>
+          <section className={`${mc.ressource} `}>
+            {ressourcesByUserId.length === 0 ? (
+              <p>Tu n'as pas encore publier de ressources sur ta page !! </p>
+            ) : (
+              categoriesRessource.map((categorie) => (
+                <article key={categorie.id}>
+                  <h2>{categorie.name}</h2>
+                  <section className={`${mc.categorieRessource}`}>
+                    {ressourcesByUserId.map((ressource) => {
+                      if (categorie.id === ressource.categorieId) {
+                        return (
+                          <article className={`${mc.card} `} key={ressource.id}>
+                            <div className={`buttonCard flex ai-center jc-end`}>
+                              <button
+                                aria-label={"supprimer une ressource"}
+                                onClick={() => {
+                                  deleteRessourceId(ressource.id);
+                                }}
+                              >
+                                X
+                              </button>
+                              <button
+                                aria-label={"modifier une ressource"}
+                                onClick={() => {
+                                  handleModificated(
+                                    ressource.id,
+                                    ressource.title,
+                                    ressource.url,
+                                    ressource.description,
+                                    ressource.categorieId
+                                  );
+                                }}
+                              >
+                                <img
+                                  src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
+                                  alt="settings"
+                                />
+                              </button>
+                            </div>
+                            <h3 className={`${mc.title}`}>{ressource.title}</h3>
+                            <p className={`${mc.url}`}>
+                              <a
+                                href={
+                                  ressource.url.startsWith("https://")
+                                    ? ressource.url
+                                    : `https://${ressource.url}`
+                                }
+                                target={"_blank"}
+                              >
+                                {ressource.url}
+                              </a>
+                            </p>
+                            <p className={`${mc.description}`}>
+                              Description :{ressource.description}
+                            </p>
+                            <button
+                              aria-label={
+                                "partager une ressource dans la page découvrir"
+                              }
+                              className={`submit `}
+                              onClick={() => {
+                                handleShare(ressource.id);
+                              }}
+                            >
+                              {ressource.shareRessource
+                                ? "Non Partage"
+                                : "Partage"}
+                            </button>
+                          </article>
+                        );
+                      }
+                    })}
+                  </section>
+                </article>
+              ))
+            )}
+          </section>
+        </>
+      )}
+    </section>
   );
 };
 export default RessourceUser;

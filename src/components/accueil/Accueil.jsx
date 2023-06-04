@@ -26,7 +26,6 @@ const Accueil = () => {
           </article>
         )}
       </section>
-      }
     </main>
   );
 };

@@ -33,11 +33,13 @@
 }
 
 @media screen and (min-width: 800px) {
-
+        h1{
+          text-align: start;
+        }
        .categorieRessource {
         display: flex;
         flex-wrap: wrap;
-         justify-content: center;
+         justify-content: start;
         & .card {
           width:45%;
         }
