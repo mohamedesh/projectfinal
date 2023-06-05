@@ -34,17 +34,9 @@ const SignUp = () => {
     setPseudo(e.target.value);
   };
 
-  // const{ surname, name, pseudo, password, email } = useSelector(
-  //   (store) => store.user
-  // );
-
-  // const handleChangeField = (key, value) => {
-  //   dispatch(newState({ key, value }));
-  // };
-  //
   const handleForm = async (e) => {
     e.preventDefault();
-    dispatch(
+    await dispatch(
       postUser({
         surname: surname,
         name: name,

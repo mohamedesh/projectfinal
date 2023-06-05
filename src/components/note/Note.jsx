@@ -12,11 +12,10 @@ import Loader from "../loader/Loader";
 
 const Note = () => {
   const dispatch = useDispatch();
-  // ramene les states
   const { title, description, contain, notes, loading, rejectedNote } =
     useSelector((store) => store.note);
   const { users } = useSelector((store) => store.persistedReducer);
-  // comment le state va devoir etre
+
   const handleChangeField = (key, value) => {
     dispatch(newState({ key, value }));
   };

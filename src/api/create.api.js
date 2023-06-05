@@ -1,6 +1,5 @@
 import { API_URL } from "../const/api-url.const";
-import { getItem, setItem } from "../utilitaire/storage.utilitaire";
-// envoie les information qu'il faut au back
+
 const postRequest = async (url, body, token = null) => {
   const config = {
     method: "POST",
@@ -10,9 +9,8 @@ const postRequest = async (url, body, token = null) => {
     body: JSON.stringify(body),
   };
 
-  // si il y a un token rajoute le dans header dans Authorization
   if (token) config.headers.Authorization = token;
-  // envoie ces element pour que request les traite
+
   return await request(url, config);
 };
 
@@ -50,7 +48,6 @@ const getRequest = async (url, token = null) => {
   return await request(url, config);
 };
 
-//reçois les data du côté back
 const request = async (url, config) => {
   let status = -1;
   let error = null;
@@ -66,7 +63,6 @@ const request = async (url, config) => {
   }
 };
 
-// il traite les erreurs
 const handleResponse = (status, data, error) => {
   const hasError = !data || status >= 400;
   return {

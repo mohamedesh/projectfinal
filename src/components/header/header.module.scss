@@ -28,7 +28,7 @@ header{
      transform: translateX(200%);
      transition: transform .3s;
       z-index: 1;
-      font-size: 4rem;
+      text-align: center;
       &.open{
         transform: none;
       }
@@ -39,7 +39,7 @@ header{
         & a{
           padding: 1.5rem 1rem;
           display: inline-block;
-          font-size: 4rem;
+          font-size: 2.7rem;
           color: #ffffff;
           transition: all .3s;
         }
@@ -50,6 +50,7 @@ header{
         }
       }
       & .connect {
+
         & .logout,.btnConnexion,.btnDeconnexion{
           all: unset;
           cursor: pointer;
@@ -101,48 +102,25 @@ header{
          }
        }
      }
-
-     // /*the most important for menu burger* : permet de ramener le menu qui etait en translate en annualnt tout les effets sur lui*/
-     //& #burgertoggle:checked~.navlist {
-     //  transform: none;
-     //}
-     //
-     ///*rend la bar transparente pour pouvoir faire la croix */
-     //& #burgertoggle:checked~.burger .bar {
-     //  background-color: transparent;
-     //}
-     //
-     ///*faire la croix dés le clique sur le menu*/
-     //& #burgertoggle:checked~.burger .bar::before {
-     //  transform: rotate(-45deg);
-     //}
-     //
-     //& #burgertoggle:checked~.burger .bar::after {
-     //  transform: rotate(45deg);
-     //}
-
    }
 }
 
 @media screen and (min-width:1024px) {
   header {
     & .logo {
-    width:15%;
+    width:14%;
     }
 
     & nav {
-      width:85%;
-      display: flex;
-      justify-content: space-around;
+      width:86%;
       & .navlist {
         font-size: 2rem;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: center;
         transform: none;
         transition: none;
         position: static;
         height: 0;
-        display: flex;
         flex-direction: row;
         & li a {
           color : #0C6291;
@@ -162,7 +140,7 @@ header{
         }
         & .connect {
           display: flex;
-          justify-content: flex-end;
+          //justify-content: end;
           align-items: center;
           & .logout, .btnConnexion,.btnDeconnexion{
             all: unset;
@@ -195,9 +173,28 @@ header{
         position: static;
       }
     }
+  }
+}
+@media screen and (min-width:1100px) {
+  header {
+    & .logo {
+      width: 20%;
+    }
 
+    & nav {
+      width: 80%;
+    }
+  }
+}
 
+@media screen and (min-width:1280px) {
+  header {
+    & .logo {
+      width: 25%;
+    }
 
-
+    & nav {
+      width: 75%;
+    }
   }
 }

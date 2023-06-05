@@ -13,6 +13,7 @@ export const postUser = createAsyncThunk(
   async (form, thunkApi) => {
     const { fulfillWithValue, rejectWithValue } = thunkApi;
     const { status, data, error } = await postRequest("users/signUp", form);
+    console.log(data);
     const token = data.token;
     setItem("token", token);
     return error
@@ -39,7 +40,6 @@ export const getUser = createAsyncThunk(
     const { fulfillWithValue, rejectWithValue } = thunkApi;
     const token = getItem("token");
     const { status, data, error } = await getRequest("users/displayAll", token);
-    console.log(data.user);
     return error
       ? rejectWithValue(`Cannot get User - Error Status ${status} - ${error}`)
       : fulfillWithValue(data);
@@ -130,7 +130,7 @@ export const usersSlice = createSlice({
         return {
           ...state,
           loading: false,
-          users: action.payload.response,
+          users: action.error,
           isLogged: false,
         };
       })

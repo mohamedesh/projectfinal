@@ -34,9 +34,9 @@ const Header = () => {
   };
 
   return (
-    <header className="flex jc-space-between ai-center">
+    <header className="selectNone flex jc-space-between ai-center">
       <NavLink to={"/"}>
-        <div className={mc.logo}>
+        <div className={`${mc.logo}`}>
           <p>Good</p>
           <span>Corner</span>
         </div>
@@ -61,11 +61,13 @@ const Header = () => {
                 A propos{" "}
               </NavLink>
             </li>
-            <li>
-              <NavLink to={"/dashboard"} onClick={handleNavLinkClick}>
-                Tableau de bord
-              </NavLink>
-            </li>
+            {isLogged ? (
+              <li>
+                <NavLink to={"/dashboard"} onClick={handleNavLinkClick}>
+                  Tableau de bord
+                </NavLink>
+              </li>
+            ) : null}
             <li>
               <NavLink to={"/discovery"} onClick={handleNavLinkClick}>
                 Découvrir
