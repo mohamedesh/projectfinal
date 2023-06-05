@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { newState, userSignIn } from "../../redux/reducers/user.slice";
-import { useLocation, redirect, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userSignIn } from "../../redux/reducers/user.slice";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -9,11 +9,6 @@ const SignIn = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // const{ password, email } = useSelector((store) => store.user);
-  // const handleChangeField = (key, value) => {
-  //   dispatch(newState({ key, value }));
-  // };
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -40,6 +35,7 @@ const SignIn = () => {
         required={true}
         onChange={(e) => handleChangeEmail(e)}
         placeholder="azerty@gmail.com"
+        pattern={"^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"}
       />
       <label htmlFor="mot de passe">Mot de passe : </label>
       <input
@@ -50,10 +46,13 @@ const SignIn = () => {
         required={true}
         onChange={(e) => handleChangePassword(e)}
         placeholder="mot de passe"
+        pattern={
+          "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
+        }
       />
       <input
         aria-label={"envoyer le formulaire de connection"}
-        className={`submit`}
+        className={`submit selectNone`}
         type="submit"
       />
     </form>

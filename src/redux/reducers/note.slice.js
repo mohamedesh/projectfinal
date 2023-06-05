@@ -94,7 +94,6 @@ export const noteSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // fulfilled = data rep du serveur
       .addCase(postNote.fulfilled, (state, action) => {
         // action = propriété de fulfillWithValue
         return {

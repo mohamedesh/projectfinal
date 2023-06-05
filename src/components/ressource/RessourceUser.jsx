@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteRessource,
-  categoryChange,
   postRessource,
   updateRessource,
   getRessourceByUserId,
@@ -18,14 +17,9 @@ const RessourceUser = () => {
   const [shareRessource, setShareRessource] = useState(false);
 
   const dispatch = useDispatch();
-  const {
-    title,
-    url,
-    description,
-    ressourcesByUserId,
-    loading,
-    rejectedRessource,
-  } = useSelector((store) => store.ressource);
+  const { ressourcesByUserId, loading, rejectedRessource } = useSelector(
+    (store) => store.ressource
+  );
   console.log(rejectedRessource);
   const { users } = useSelector((store) => store.persistedReducer);
   const { categoriesRessource } = useSelector((store) => store.categories);
@@ -38,7 +32,6 @@ const RessourceUser = () => {
     dispatch(getCategorie());
   }, []);
 
-  // changer de categorie
   const handleCategoryChange = (e) => {
     setHandleRessource({
       ...handleRessource,
@@ -61,12 +54,10 @@ const RessourceUser = () => {
       })
     );
   };
-  console.log(shareRessource);
-  // supprimer ressources
+
   const deleteRessourceId = (id) => {
     dispatch(deleteRessource(id));
   };
-  // modifier ressource
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -108,7 +99,7 @@ const RessourceUser = () => {
       ) : (
         <>
           <button
-            className={` ${mc.submit}`}
+            className={` ${mc.submit} selectNone`}
             aria-label={"acceder à un nouveau formulaire de ressource"}
             onClick={toggleModal}
           >
@@ -125,6 +116,7 @@ const RessourceUser = () => {
                           "sortir du formulaire de modification de ressource"
                         }
                         onClick={toggleModal}
+                        className={"selectNone"}
                       >
                         X
                       </button>
@@ -197,7 +189,7 @@ const RessourceUser = () => {
                           })
                         }
                       />
-                      <input className={`submit`} type="submit" />
+                      <input className={`submit selectNone`} type="submit" />
                     </form>
                   </div>
                 </div>
@@ -210,6 +202,7 @@ const RessourceUser = () => {
                           "sortir du formulaire de création de ressource"
                         }
                         onClick={toggleModal}
+                        className={`selectNone`}
                       >
                         X
                       </button>
@@ -286,7 +279,7 @@ const RessourceUser = () => {
                           })
                         }
                       />
-                      <input className={`submit`} type="submit" />
+                      <input className={`submit selectNone`} type="submit" />
                     </form>
                   </div>
                 </div>
@@ -320,6 +313,7 @@ const RessourceUser = () => {
                                   onClick={() => {
                                     deleteRessourceId(ressource.id);
                                   }}
+                                  className={`selectNone`}
                                 >
                                   X
                                 </button>
@@ -334,6 +328,7 @@ const RessourceUser = () => {
                                       ressource.categorieId
                                     );
                                   }}
+                                  className={`selectNone`}
                                 >
                                   <img
                                     src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"
@@ -363,7 +358,7 @@ const RessourceUser = () => {
                                 aria-label={
                                   "partager une ressource dans la page découvrir"
                                 }
-                                className={`submit `}
+                                className={`submit selectNone `}
                                 onClick={() => {
                                   handleShare(ressource.id);
                                 }}

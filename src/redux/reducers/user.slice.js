@@ -7,7 +7,6 @@ import {
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getItem, setItem } from "../../utilitaire/storage.utilitaire";
 
-// recup les data du cote front pour l'envoyer du cote back
 export const postUser = createAsyncThunk(
   "users/create",
   async (form, thunkApi) => {

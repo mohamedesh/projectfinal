@@ -22,7 +22,7 @@ const Header = () => {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
-  console.log(isNavBarOpen);
+
   const handleButtonSignIn = () => {
     setShowSignIn(!showSignIn);
   };

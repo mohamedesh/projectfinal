@@ -85,6 +85,7 @@ const SignUp = () => {
         value={email}
         onChange={(e) => handleChangeEmail(e)}
         placeholder="email"
+        pattern={"^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"}
       />
       <label htmlFor="mot de passe">Mot de passe :</label>
       <input
@@ -94,10 +95,13 @@ const SignUp = () => {
         value={password}
         onChange={(e) => handleChangePassword(e)}
         placeholder="mot de passe"
+        pattern={
+          "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
+        }
       />
       <input
         aria-label={"envoyer le formulaire d'inscription"}
-        className={mc.submit}
+        className={`${mc.submit} selectNone`}
         type="submit"
         value="Envoyez"
       />

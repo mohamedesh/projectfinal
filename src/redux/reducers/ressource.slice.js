@@ -6,11 +6,7 @@ import {
 } from "../../api/create.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getItem } from "../../utilitaire/storage.utilitaire";
-import {
-  sortArrayById,
-  sortArrayByCategorieId,
-} from "../../utilitaire/sort.utilitaire";
-import categorie from "../../components/categorie/Categorie";
+import { sortArrayById } from "../../utilitaire/sort.utilitaire";
 
 export const postRessource = createAsyncThunk(
   "ressource/create",
@@ -105,7 +101,6 @@ export const updateRessource = createAsyncThunk(
 export const ressourceSlice = createSlice({
   name: "ressources",
   initialState: {
-    // les states
     title: "",
     url: "",
     description: "",

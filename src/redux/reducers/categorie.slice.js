@@ -46,7 +46,6 @@ export const categorieSlice = createSlice({
   },
   reducers: {
     selectCategorie: (state, action) => {
-      console.log(action.payload);
       return { ...state, selectedCategorie: action.payload };
     },
   },

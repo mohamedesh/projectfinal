@@ -9,7 +9,6 @@ import { newState } from "../../redux/reducers/note.slice";
 import { useEffect, useState } from "react";
 import mc from "./note.module.scss";
 import Loader from "../loader/Loader";
-
 const Note = () => {
   const dispatch = useDispatch();
   const { title, description, contain, notes, loading, rejectedNote } =
@@ -67,7 +66,7 @@ const Note = () => {
         <>
           <button
             aria-label={"acceder à un formulaire de création de note"}
-            className={` ${mc.submit}`}
+            className={` ${mc.submit} selectNone`}
             onClick={toggleModal}
           >
             +
@@ -81,6 +80,7 @@ const Note = () => {
                     <button
                       aria-label={"sortir du formulaire de modification"}
                       onClick={toggleModalModified}
+                      className={`selectNone`}
                     >
                       X
                     </button>
@@ -129,7 +129,7 @@ const Note = () => {
                         setEditNote({ ...editNote, contain: e.target.value })
                       }
                     />
-                    <input className={`submit`} type="submit" />
+                    <input className={`submit selectNone`} type="submit" />
                   </form>
                 </div>
               </div>
@@ -143,6 +143,7 @@ const Note = () => {
                     <button
                       aria-label={"sortir du formulaire de création de note"}
                       onClick={toggleModal}
+                      className={`selectNone`}
                     >
                       X
                     </button>
@@ -188,7 +189,7 @@ const Note = () => {
                         handleChangeField("contain", e.target.value)
                       }
                     />
-                    <input className={`submit`} type="submit" />
+                    <input className={`submit selectNone`} type="submit" />
                   </form>
                 </div>
               </div>
@@ -208,6 +209,7 @@ const Note = () => {
                         <button
                           aria-label={"supprimer une note"}
                           onClick={() => deleteNoteId(note.id)}
+                          className={`selectNone`}
                         >
                           X
                         </button>
@@ -221,6 +223,7 @@ const Note = () => {
                               note.contain
                             )
                           }
+                          className={`selectNone`}
                         >
                           <img
                             src="https://img.freepik.com/free-icon/settings-gear-symbol_318-10116.jpg?w=1380&t=st=1685139858~exp=1685140458~hmac=4f876b01062d8a249b61f75e689ef8b073e4c707cfff877cd4a2388e430c3061"

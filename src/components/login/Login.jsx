@@ -20,7 +20,10 @@ const Login = () => {
           <SignUp />
           <p className={`${mc.account}`}>
             Vous avez déjà un compte :
-            <button className={`${mc.button}`} onClick={() => toggle()}>
+            <button
+              className={`${mc.button} selectNone`}
+              onClick={() => toggle()}
+            >
               Se connecter ?
             </button>
           </p>
@@ -31,7 +34,10 @@ const Login = () => {
           <SignIn />
           <p>
             Toujours pas parmis nous :
-            <button className={`${mc.button}`} onClick={() => toggle()}>
+            <button
+              className={`${mc.button} selectNone`}
+              onClick={() => toggle()}
+            >
               Créer un compte
             </button>
           </p>
