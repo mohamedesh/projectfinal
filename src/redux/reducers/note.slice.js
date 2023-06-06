@@ -171,7 +171,7 @@ export const noteSlice = createSlice({
       .addCase(updateNote.pending, (state, action) => {
         return {
           ...state,
-          loading: true,
+          loading: false,
         };
       })
       .addCase(updateNote.rejected, (state, action) => {

@@ -202,7 +202,7 @@ export const ressourceSlice = createSlice({
       .addCase(updateRessource.pending, (state, action) => {
         return {
           ...state,
-          loading: true,
+          loading: false,
         };
       })
       .addCase(updateRessource.rejected, (state, action) => {
